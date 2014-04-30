@@ -1,0 +1,47 @@
+<!--<div class="jumbotron">
+	<div olw-brand/>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-10">
+				<p class="lead">{{ 'PAGE_TEASER' | translate }}</p>
+			</div>
+		</div>
+	</div>
+</div>-->
+<div olw-jumbotron class="olw-landing-page-header-bg">
+	<p class="lead text-center visible-xs">{{'PAGE_TEASER' | translate}}</p>
+	<p class="lead hidden-xs">{{'PAGE_TEASER' | translate}}</p>
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+		<header>
+		<h1 class="h1">{{ 'HEADLINE_HIGHLIGHTS' | translate }}</h1>
+		</header>
+		</div>
+	</div>
+</div>
+<div class="container olw-section-container" ng-repeat="slug in orderedSections">
+	<div class="row">
+		<div class="col-md-12">
+		<h2 class="h2"><a ng-href="#!/section/{{sections[slug].url}}" ng-class="['text-' + slug, 'text-' + slug + '-hover']" translate>SECTION_{{slug}}</a></h2>
+		</div>
+	</div>
+	<div class="row olw-thumbnail-container">
+		<div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="highlight in sections[slug].content" ng-class="{'hidden-xs, hidden-sm': $index > 1}">
+		<a ng-href="#!/collection/{{highlight.url}}" class="thumbnail" ng-class="'border-' + slug">
+			<p ng-class="'text-' + slug" class="text-uppercase" translate>AREA_{{highlight.areaId}}</p>
+			<div ng-class="'multilayer-bg-lofi-' + highlight.areaId" class="olw-thumbnail-img"></div>
+			<div class="caption">
+				<h3 class="h3">{{highlight.title}}</h3>
+			</div>
+		</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<a ng-href="#!/section/{{sections[slug].url}}" ng-class="['text-' + slug, 'text-' + slug + '-hover', 'border-' + slug]" class="olw-thumbnail-container-border olw-underline">{{'BUTTON_EXPLORE' | translate}}</a>
+		</div>
+	</div>
+</div>

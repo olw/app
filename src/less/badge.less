@@ -1,0 +1,30 @@
+.badge {
+	whitespace: normal;
+}
+
+.olw-badge {
+	padding: .38em .62em;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	margin-right: 5px;
+	font-weight: 400;
+	font-style: italic;
+}
+
+.badge-gw:extend(.olw-badge) {
+	border-color: @color-gw;
+	background-color: fade(@color-gw, 10%);
+	color: @color-gw;
+}
+
+.badge-iw:extend(.olw-badge) {
+	border-color: @color-iw;
+	background-color: fade(@color-iw, 10%);
+	color: @color-iw;
+}
+
+.badge-nw:extend(.olw-badge) {
+	border-color: @color-nw;
+	background-color: fade(@color-nw, 10%);
+	color: @color-nw;
+}

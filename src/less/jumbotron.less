@@ -1,0 +1,21 @@
+.jumbotron {
+	padding: 0;
+	height: 70%;
+	height: 70vh;
+	color: @color-white;
+	text-shadow: 0 0 10px fade(@color-black, 30%);
+
+	[ng-transclude] {
+		margin-top: 10%;
+		margin-top: 10vh;
+		@media screen and (min-width: @breakpoint-sm) {
+			margin-top: 5%;
+			margin-top: 5vh;
+		}
+	}
+
+	.lead {
+		font-size: (@font-size-xs * 3);
+		@media screen and (min-width: @breakpoint-sm) { font-size: (@font-size-xs * 4); }
+	}
+}

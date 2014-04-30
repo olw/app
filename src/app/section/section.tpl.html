@@ -1,0 +1,80 @@
+<header>
+<div ng-class="'multilayer-bg-' + slug" class="olw-img-container">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 class="text-center olw-style-reset"><span class="label olw-label-transparent text-uppercase olw-hyphens" translate>SECTION_{{slug}}</span></h1>
+			</div>
+		</div>
+	</div>
+</div>
+</header>
+<div class="bg-light-grey" style="padding-bottom:12px;margin-bottom:12px">
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+		<header>
+			<h1 class="h1">{{ 'HEADLINE_HIGHLIGHTS' | translate }}</h1>
+		</header>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="highlight in highlights" ng-class="{'hidden-xs, hidden-sm': $index > 1}">
+		<a href="#!/area/{{area.name | lowercase}}-{{area.id}}" class="text-uppercase" ng-class="'text-' + slug" ng-repeat="area in highlight.areas"><span ng-show="$index > 0">, </span><span translate>AREA_{{area.id}}</span></a>
+		<a ng-href="#!/collection/{{highlight.url}}" class="thumbnail">
+			<div ng-class="'multilayer-bg-lofi-' + highlight.areas[0].id" class="olw-thumbnail-img"></div>
+			<div class="caption">
+				<h3 class="h3">{{highlight.title}}</h3>
+			</div>
+		</a>
+		</div>
+	</div>
+</div>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="input-group olw-input-group">
+  				<span class="input-group-addon" ng-class="'bg-' + slug">{{'FILTER_LANGUAGE' | translate}}:</span>
+				<div class="btn-group">
+  					<button type="button" class="btn btn-default" ng-click="toggleFilter('language','german')">
+  						<i class="fa fa-check" ng-class="'text-' + slug" ng-show="isEnabled('language', 'german')"></i>
+  						Deutsch
+  					</button>
+  					<button type="button" class="btn btn-default" ng-click="toggleFilter('language','english')">
+  						<i class="fa fa-check" ng-class="'text-' + slug" ng-show="isEnabled('language', 'english')"></i>
+  						English
+  					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<h4 ng-class="'text-' + slug">
+				{{totalElements}}
+				<span ng-show="totalElements == 1">{{'HEADLINE_LECTURE' | translate}}</span>
+				<span ng-hide="totalElements == 1">{{'HEADLINE_LECTURES' | translate}}</span>
+			</h4>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<ul class="media-list nav">
+				<li class="media" ng-repeat="collection in collections">
+					<div class="media-object pull-left olw-media-object">
+						{{collection.numberOfResources}}
+					</div>
+					<div olw-li-body title="collection.title" subtitle="collection.users.join(', ')" badges="badges(collection)" url="'collection/' + collection.url"/>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<p>
+				<button class="btn btn-lg btn-default olw-btn-{{slug}}" ng-click="fetch()" ng-hide="!moreAvailable">{{'BUTTON_LOAD_MORE' | translate}}</button>
+			</p>
+		</div>
+	</div>
+</div> 
