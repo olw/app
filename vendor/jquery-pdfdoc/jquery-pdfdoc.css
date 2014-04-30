@@ -1,0 +1,202 @@
+.h-pdf-container {
+	width: 100%;
+	background: #444;
+    font: 11px verdana;
+    position: relative;
+}
+
+.h-pdf-toolbar {
+	border-left: 1px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 1px 0 0 rgba(255, 255, 255, 0.08) inset, 0 1px 1px rgba(0, 0, 0, 0.15) inset, 0 -1px 0 rgba(255, 255, 255, 0.05) inset, 0 1px 0 rgba(0, 0, 0, 0.15), 0 1px 1px rgba(0, 0, 0, 0.1);
+    height: 32px;
+    position: relative;
+
+	background-image: -webkit-linear-gradient(rgba(81, 81, 81, .99), rgba(68, 68, 68, .95));
+	background-image: -moz-linear-gradient(rgba(81, 81, 81, .99), rgba(68, 68, 68, .95));
+	background-image: -ms-linear-gradient(rgba(81, 81, 81, .99), rgba(68, 68, 68, .95));
+	background-image: -o-linear-gradient(rgba(81, 81, 81, .99), rgba(68, 68, 68, .95));
+	background-image: linear-gradient(rgba(81, 81, 81, .99), rgba(68, 68, 68, .95));
+}
+
+.h-pdf-toolbar-left {}
+.h-pdf-toolbar-right { float: right; }
+
+.h-pdf-toolbar-center-outer {
+	position: relative;
+	float: right;
+	right: 50%;	
+}
+
+.h-pdf-toolbar-center {
+	position: relative;
+    float: right;
+    right: -50%;
+}
+
+.h-pdf-toolbar-group {
+	padding: 0px;
+	margin: 3px;
+	border: 1px outset transparent;
+	display: inline-block;
+	float: left;
+	line-height: 8px;
+}
+	
+.h-pdf-toolbar-group .h-pdf-button:last-child { border-left: 1px inset rgba(0,0,0,0.2); }
+
+.h-pdf-toolbar-group:hover { 
+	border-color: rgba(0,0,0,0.3);
+	border-color: rgba(0, 0, 0, 0.32) rgba(0, 0, 0, 0.38) rgba(0, 0, 0, 0.42);
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.h-pdf-button {
+	height: 24px;
+	padding: 6px 4px;
+	display: inline-block;
+	background-repeat: no-repeat;
+	background-position: 4px 4px;
+}
+
+.h-pdf-button:hover { background-color: rgba(0,0,0,0.1); }
+.h-pdf-button:active { background-color: rgba(255,255,255,0.1); }
+
+.h-pdf-pagetext, .h-pdf-pageinput, .h-pdf-pagecount { 
+	position: relative;
+	float: left;
+	margin-left: 10px;
+	line-height: 32px;
+}
+
+.h-pdf-pagetext, .h-pdf-pagecount { color: #d8d8d8; }
+
+.h-pdf-pageinput {
+	position: relative;
+	top: -1px;
+	width: 50px;
+	margin-top: 6px;
+	margin-left: 5px;
+	padding: 4px 6px;
+	
+    background-image: -webkit-linear-gradient(rgba(255, 255, 255, .05), rgba(255, 255, 255, 0));
+    background-image: -moz-linear-gradient(rgba(255, 255, 255, .05), rgba(255, 255, 255, 0));
+    background-image: -ms-linear-gradient(rgba(255, 255, 255, .05), rgba(255, 255, 255, 0));
+    background-image: -o-linear-gradient(rgba(255, 255, 255, .05), rgba(255, 255, 255, 0));
+    background-image: linear-gradient(rgba(255, 255, 255, .05), rgba(255, 255, 255, 0));
+    
+    border-color: rgba(0, 0, 0, 0.32) rgba(0, 0, 0, 0.38) rgba(0, 0, 0, 0.42);
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05) inset, 0 1px 0 rgba(255, 255, 255, 0.05);
+	background-color: rgba(255, 255, 255, 0.09);
+    color: #F2F2F2;
+
+	text-align: right;
+    line-height: 1;
+}
+
+.h-pdf-pageinput:focus {
+	background-color: rgba(255, 255, 255, 0.15);
+	border-color: rgba(76, 183, 255, 0.8) rgba(76, 183, 255, 0.85) rgba(76, 183, 255, 0.9);
+}
+
+.h-pdf-zoom {
+	position: relative;
+	float: left;
+	margin: 4px 15px;
+	line-height: 22px;
+	width: 120px;
+    overflow: hidden;
+    border-color: rgba(0, 0, 0, 0.32) rgba(0, 0, 0, 0.38) rgba(0, 0, 0, 0.42);
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 0 rgba(255, 255, 255, 0.05);
+    background: no-repeat scroll 95% center transparent;
+}
+
+.h-pdf-zoom:hover { background-color: rgba(0,0,0,0.2); }
+
+.h-pdf-zoom-select {
+    -moz-appearance: none;
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    color: #F2F2F2;
+    font-size: 12px;
+    margin: 0;
+    min-width: 140px;
+    padding: 0;
+}
+
+.h-pdf-download {
+	float: right;
+	display: inline-block;
+	margin: 3px;
+	border: 1px outset transparent;
+}
+
+.h-pdf-download:hover {
+	border-color: rgba(0,0,0,0.3);
+	border-color: rgba(0, 0, 0, 0.32) rgba(0, 0, 0, 0.38) rgba(0, 0, 0, 0.42);
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 0 1px rgba(255, 255, 255, 0.15) inset, 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.h-pdf-canvas-container {
+	overflow: hidden;
+	border-width: 0px 1px 1px;
+	border-style: solid;
+	border-color: rgba(150,150,150,0.1);
+	text-align: center;
+}
+
+.h-pdf-canvas {
+	background: #fff;
+	box-shadow: 4px 4px 8px rgba(0,0,0,0.2);
+	border: 1px solid rgba(0,0,0,0.3);
+	margin: 15px;
+}
+
+.h-pdf-progress, .h-pdf-progress-bar, .h-pdf-progress-bar-overlay { border-radius: 5px; }
+	
+.h-pdf-progress {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-top: -12px;
+	margin-left: -100px;
+	
+	width: 200px;
+	height: 25px;
+	border: 1px inset rgba(0,0,0,0.2);
+	box-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+	
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.25, rgba(0,0,0,0.2)), color-stop(0.75, rgba(0,0,0,0.1)));
+	background-image: -webkit-linear-gradient(bottom, rgba(0,0,0,0.2) 25%, rgba(0,0,0,0.1) 75%);
+	background-image: -moz-linear-gradient(bottom, rgba(0,0,0,0.2) 25%, rgba(0,0,0,0.1) 75%);
+	background-image: -ms-linear-gradient(bottom, rgba(0,0,0,0.2) 25%, rgba(0,0,0,0.1) 75%);
+	background-image: -o-linear-gradient(bottom, rgba(0,0,0,0.2) 25%, rgba(0,0,0,0.1) 75%);
+	background-image: linear-gradient(bottom, rgba(0,0,0,0.2) 25%, rgba(0,0,0,0.1) 75%);
+}
+
+.h-pdf-progress-bar {
+	height: 100%;
+	width: 0%;
+
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.14, rgb(4,115,143)), color-stop(0.57, rgb(0,146,179)));
+	background-image: -webkit-linear-gradient(bottom, rgb(4,115,143) 14%, rgb(0,146,179) 57%);
+	background-image: -moz-linear-gradient(bottom, rgb(4,115,143) 14%, rgb(0,146,179) 57%);
+	background-image: -ms-linear-gradient(bottom, rgb(4,115,143) 14%, rgb(0,146,179) 57%);
+	background-image: -o-linear-gradient(bottom, rgb(4,115,143) 14%, rgb(0,146,179) 57%);
+	background-image: linear-gradient(bottom, rgb(4,115,143) 14%, rgb(0,146,179) 57%);
+}
+
+.h-pdf-progress-bar-overlay {
+	width: 100%;
+	height: 100%;
+	background-position: right;
+}
