@@ -8,16 +8,16 @@ Getting started
 ---------------
 
 ´´´bash
-# install global cli applications
+$ # install global cli applications
 $ sudo npm install -g grunt-cli karma bower less coffee-script http-server
-# clone this repository
+$ # clone this repository
 $ git clone https://github.com/olw/app
 $ cd app
-# install from configuration files
+$ # install from configuration files
 app$ npm install
 app$ bower install
-# start grunt
+$ # start grunt
 app$ grunt watch --force
-# start http-server
+$ # start http-server
 app/build$ http-server
 ´´´
