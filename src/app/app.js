@@ -19,7 +19,7 @@ angular.module('olw', ['templates-app', 'templates-common', 'olwDirectives', 'ol
 		});
 }])
 
-.controller('AppCtrl', ['$scope', '$translate', '$http', '$routeParams', '$route', '$location', 'conf', '$timeout', 'sections', function($scope, $translate, $http, $routeParams, $route, $location, conf, $timeout, sections) {
+.controller('AppCtrl', ['$scope', '$translate', '$http', '$routeParams', '$route', '$location', '$timeout', 'conf', 'sections', function($scope, $translate, $http, $routeParams, $route, $location, $timeout, conf, sections) {
 	$scope.titleSuffix = ' | ' + conf.app.title;
 	$scope.animation = 'none';
 
