@@ -1,0 +1,43 @@
+.olw-thumbnail-container {
+	margin-top: @font-size-xs;
+}
+
+.thumbnail {
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	background-color: inherit;
+
+	& > p {
+		margin-bottom: (@font-size-xs / 4);
+	}
+
+	.caption {
+		padding: 0;
+
+		h3 {
+			margin-top: 15px;
+			font-weight: 300;
+			line-height: 1.2;
+		}
+	}
+}
+
+a.thumbnail:hover,
+a.thumbnail:focus {
+	border-color: inherit;
+	color: inherit;
+	text-decoration: inherit;
+}
+
+.olw-thumbnail-img {
+	height: 120px;
+}
+
+.olw-thumbnail-container-border {
+	display: block;
+	padding: 15px 0;
+	width: 100%;
+	border-top: 2px solid transparent;
+	text-align: right;
+}

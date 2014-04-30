@@ -1,0 +1,43 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="input-group olw-input-group">
+  				<span class="input-group-addon bg-grey">{{'FILTER_LANGUAGE' | translate}}:</span>
+				<div class="btn-group">
+  					<button type="button" class="btn btn-default" ng-click="toggleFilter('language','german')">
+  						<i class="fa fa-check text-grey" ng-show="isEnabled('language', 'german')"></i>Deutsch
+  					</button>
+  					<button type="button" class="btn btn-default" ng-click="toggleFilter('language','english')">
+  						<i class="fa fa-check text-grey" ng-show="isEnabled('language', 'english')"></i>English
+  					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<h4 class="text-grey">
+				{{totalElements}}
+				<span ng-show="totalElements == 1">{{'HEADLINE_LECTURE' | translate}}</span>
+				<span ng-hide="totalElements == 1">{{'HEADLINE_LECTURES' | translate}}</span>
+			</h4>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<ul class="media-list nav">
+				<li class="media" ng-repeat="collection in collections">
+					<div class="media-object pull-left olw-media-object">{{collection.numberOfResources}}</div>
+					<div olw-li-body title="collection.title" subtitle="collection.users.join(', ')" badges="badges(collection)" url="'collection/' + collection.url"/>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<p>
+				<button class="btn btn-lg btn-default olw-btn-grey" ng-click="fetch()" ng-hide="!moreAvailable">{{'BUTTON_LOAD_MORE' | translate}}</button>
+			</p>
+		</div>
+	</div>
+</div>

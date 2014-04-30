@@ -1,0 +1,64 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+		<ul class="pager">
+			<li class="previous"><a ng-href="#!/area/{{area.url}}">
+				<i class="fa fa-chevron-left"></i>
+				<span ng-class="'text-' + slug">{{area.translation}}</span>
+			</a></li>
+		</ul>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<header>
+				<div class="olw-subtitle"><span ng-repeat="user in users"><span ng-show="$index > 0">, </span>{{user}}</span></div>
+				<h1 class="h2" style="margin-top:0">{{title}}</h1>
+				<p class="p"><span ng-repeat="term in terms"><span ng-show="$index > 0">, </span><span translate>SEMESTER_PART_{{term.part}}</span> {{term.year}}</span></p>
+			</header>
+		</div>
+		<div class="col-md-8">
+			<p class="p">{{description}}</p>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-sm-12 col-md-8">
+			<h2 class="hidden-xs hidden-sm h3 text-uppercase olw-h-bordered" ng-class="['text-' + slug, 'border-transparent-' + slug]">{{'HEADLINE_LECTURES' | translate}}</h2>
+			<ul class="media-list nav">
+				<li ng-repeat="resource in resources" class="media">
+					<div class="media-body olw-media-body"><a ng-href="#!/resource/{{resource.url}}">
+						<i class="fa fa-chevron-right fa-2x pull-right hidden-md hidden-lg"></i>
+						<div class="olw-media-topping"><span ng-repeat="user in resource.users"><span ng-show="$index > 0">, </span>{{user}}</span></div>
+						<h4 class="media-heading">{{$index + 1}}. {{resource.title}}</h4>
+					</a></div>
+				</li>
+			</ul>
+		</div>
+		<!-- Zugehoörige gibt es im Moment noch nicht. Problem mit liste schön anzeigen.
+		<div class="col-md-4 hidden-xs hidden-sm">
+			<h2 class="hidden-xs hidden-sm" ng-class="'text-' + slug">ZUGEH&Ouml;RIG</h2>
+			<ul class="nav nav-pills nav-stacked">
+				 <li ng-repeat="extra material"> 
+				<li>
+					<a ng-href="#!/resource/{{resource.url}}">
+						<i class="fa fa-link fa-4x"></i><span>Wiki Biomechanik des Sportsa defsh sdh sdh h  asg asfg ah sdh sdh sdh sgh sgjh fgj dgj  sdh sd</span>
+					</a>
+				</li>
+				<li>
+					<a ng-href="#!/resource/{{resource.url}}">
+						<i class="fa fa-link fa-4x"></i><span>Wiki Biomechanik</span>
+					</a>
+				</li>
+				<li>
+					<a ng-href="#!/resource/{{resource.url}}">
+						<i class="fa fa-link fa-4x"></i><span>Wiki Biomechanik des Sportsa defsh sdh sdh h  asg asfg ah sdh sdh sdh sgh sgjh fgj dgj  sdh sd</span>
+					</a>
+				</li>
+			</ul>
+			
+		</div>
+		-->
+	</div>
+</div>

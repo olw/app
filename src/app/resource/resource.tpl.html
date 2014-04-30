@@ -1,0 +1,137 @@
+<div class="container" hm-drag="drag($event)">
+	<div class="row" ng-show="collections">
+		<div class="col-md-12">
+			<ul class="pager">
+				<li class="previous"><a ng-href="#!/collection/{{collections[0].url}}">
+					<i class="fa fa-chevron-left"></i>
+					<span ng-class="'text-' + slug">{{collections[0].title}}</span>
+				</a></li>
+				<li class="next hidden-xs" ng-show="next">
+					<a ng-href="#!/resource/{{next}}">
+						<i class="fa fa-play-circle-o"></i>
+						<span ng-class="'text-' + slug">{{'BUTTON_NEXT_LECTURE' | translate}}</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="row bg-grey hidden-md hidden-lg" ng-show="showPulldownMenu">
+		<div class="col-md-12">
+			<p style="margin-top: 10px"><a ng-href="{{downloadUrl}}" class="btn btn-default btn-block">{{'BUTTON_DOWNLOAD' | translate}}</a></p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 col-sm-8">
+			<ul class="nav nav-pills nav-justified" ng-class="'olw-nav-' + slug" ng-show="(sources.video || sources.lecturer) && sources.pdf">
+				<li ng-show="sources.video || sources.lecturer" ng-class="{'active': canvasShow == 'video'}"><a href ng-click="canvasShow = 'video'">{{'MEDIA_VIDEO' | translate}}</a></li>
+				<li ng-show="sources.pdf" ng-class="{'active': canvasShow == 'pdf'}"><a href ng-click="canvasShow = 'pdf'">{{'MEDIA_PDF' | translate}}</a></li>
+				<li ng-show="sources.raw" ng-class="{'active': canvasShow == 'raw'}"><a href ng-click="canvasShow = 'raw'">{{'MEDIA_RAW' | translate}}</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane" ng-class="{'active': canvasShow == 'video'}" ng-show="sources.video || sources.lecturer">
+					<video id="video" class="olw-media-responsive" ng-show="sources.video" preload="auto" controls>
+						<source ng-repeat="source in sources.video" ng-src="{{ source }}"/>
+					</video>
+					<video id="lecturer" class="olw-media-responsive" ng-show="sources.lecturer" preload="auto" olw-attr="{'muted': sources.video}">
+						<source ng-repeat="source in sources.lecturer" ng-src="{{ source }}"/>
+					</video>
+				</div>
+				<div class="tab-pane" ng-class="{'active': canvasShow == 'pdf'}" ng-show="sources.pdf">
+					<div id="pdf" class="olw-media-responsive"></div>
+				</div>
+				<div class="tab-pane" ng-class="{'active': canvasShow == 'audio'}" ng-show="sources.audio">
+					<audio id="audio" class="olw-media-responsive" preload="auto" controls>
+						<source ng-repeat="source in sources.audio" ng-src="{{ source }}"/>
+					</audio>
+				</div>
+				<div class="tab-pane" ng-class="{'active': canvasShow == 'raw'}" ng-show="sources.raw">
+					<ul class="nav nav-pills nav-stacked">
+						<li ng-repeat="source in sources.raw"><a ng-href="{{ source }}" target="blank"><i class="fa fa-lg fa-folder"></i> {{'MEDIA_RAW' | translate}}</a></li>
+					</ul>
+				</div>
+			</div>
+			<header>
+				<div class="olw-subtitle"><span ng-repeat="user in users"><span ng-show="$index > 0">, </span>{{user}}</span></div>
+				<h1 class="h2" style="margin-top:0">{{title}}</h1>
+				<p class="p"><span ng-repeat="term in terms"><span ng-show="$index > 0">, </span><span translate>{{term.part}}</span> {{term.year}}</span></p>
+			</header>
+			<p ng-show="description.length > 0" class="p">{{description}}</p>
+			<p ng-hide="description.length > 0" class="p"><br><br><br><br><br></p>
+		</div>
+		<div class="col-xs-12 col-sm-4">
+			<a ng-href="{{downloadUrl}}" class="btn btn-default btn-block">{{'BUTTON_DOWNLOAD' | translate}}</a>
+			<h2 ng-class="['text-' + slug, 'border-transparent-' + slug]" class="h3 text-uppercase olw-h-bordered" ng-if="chapters">{{'HEADLINE_CHAPTERS' | translate}}</h2>
+			<ol class="nav nav-pills nav-stacked olw-nav-unpadded" ng-show="chapters">
+				<li ng-repeat="chapter in chapters"><a href ng-click="jump(chapter.from)">{{$index + 1}}. {{chapter.title}} <span class="text-muted">({{chapter.fromRendered | date:'m:ss'}})</span></a></li>
+			</ol>
+
+			<h2 ng-class="['text-' + slug, 'border-transparent-' + slug]" class="h3 text-uppercase olw-h-bordered" ng-show="related">{{'HEADLINE_RELATED' | translate}}</h2>
+			<ul class="media-list nav" ng-show="related">
+				<li ng-repeat="item in related" class="media">
+					<!-- type.id == 1 -> external page -->
+					<!-- type.id == 2 -> external pdf -->
+					<!-- type.id == 3 -> tuprint -->
+					<i class="fa fa-3x pull-left" ng-class="{
+						'fa-link': item.type.id == 1,
+						'fa-file-text-o': item.type.id == 2,
+						'fa-book': item.type.id == 3
+					}"></i>
+					<div class="media-body olw-media-body"><a ng-href="{{item.link}}" target="blank">
+						<div ng-show="item.author" class="olw-media-topping">{{item.author}}</div>
+						<h4 class="media-heading">{{item.name}}</h4>
+					</a></div>
+				</li>
+			</ul>
+		</div>
+		<div class="col-xs-12">
+			<h2 ng-class="['text-' + slug, 'border-transparent-' + slug]" class="h3 text-uppercase olw-h-bordered hidden-sm hidden-md hidden-lg" ng-show="code">{{'HEADLINE_LICENSE' | translate}}</h2>
+			<div class="col-xs-2 col-sm-2 col-md-1 hidden-xs">
+				<img src="assets/img/cc/cc.svg" class="img-responsive">
+			</div>
+			<p>{{'LICENSE_CC_TEXT' | translate:licenseTranslationParams}}</p>
+		
+			<div class="col-sm-10 col-md-11">
+				<div class="col-xs-12 col-sm-4" ng-if="code.indexOf('by') > -1">	
+					<div class="col-xs-1 col-sm-3 col-md-2">
+						<a ng-href="https://creativecommons.org/licenses/{{code.join('-')}}/3.0">
+							<img src="assets/img/cc/by.svg" class="img-responsive">
+						</a>
+					</div>
+					<a ng-href="https://creativecommons.org/licenses/{{code.join('-')}}/3.0">
+						{{'LICENSE_CC_BY' | translate}}
+					</a>
+				</div>
+				<div class="col-xs-12 col-sm-4" ng-if="code.indexOf('nc') > -1">
+					<div class="col-xs-1 col-sm-3 col-md-2">
+						<a ng-href="https://creativecommons.org/licenses/{{code.join('-')}}/3.0">
+							<img src="assets/img/cc/nc.svg" class="img-responsive">
+						</a>
+					</div>
+					<a ng-href="https://creativecommons.org/licenses/{{code.join('-')}}/3.0">
+						{{'LICENSE_CC_NC' | translate}}
+					</a>
+			</div>
+			<div class="col-xs-12 col-sm-4" ng-if="code.indexOf('nd') > -1">
+					<div class="col-xs-1 col-sm-3 col-md-2">
+						<a ng-href="https://creativecommons.org/licenses/{{code.join('-')}}/3.0">
+							<img src="assets/img/cc/nd.svg" class="img-responsive">
+						</a>
+					</div>
+					<a ng-href="https://creativecommons.org/licenses/{{code.join('-')}}/3.0">
+					{{'LICENSE_CC_ND' | translate}}
+					</a>
+			</div>
+			<div  class="col-xs-12 col-sm-4" ng-if="code.indexOf('sa') > -1">
+					<div class="col-xs-1 col-sm-3 col-md-2">
+						<a ng-href="https://creativecommons.org/licenses/{{code.join('-')}}/3.0">
+							<img src="assets/img/cc/sa.svg" class="img-responsive">
+						</a>
+					</div>
+					<a ng-href="https://creativecommons.org/licenses/{{code.join('-')}}/3.0">
+						{{'LICENSE_CC_SA' | translate}}
+					</a>
+				
+
+		</div>
+	</div>
+</div>
