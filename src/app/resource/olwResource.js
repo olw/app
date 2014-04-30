@@ -1,4 +1,4 @@
-angular.module('olwResource', ['olwConfService', 'ngRoute', 'ngAnimate', 'hmTouchEvents', 'ng', 'seo'])
+angular.module('olwResource', ['olwConfigurationService', 'olwSectionsService', 'olwCdnService', 'olwUsernameFilter', 'ngRoute', 'ngAnimate', 'hmTouchEvents', 'ng', 'seo'])
 
 .config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/resource/:nameWithId', {
@@ -20,7 +20,7 @@ angular.module('olwResource', ['olwConfService', 'ngRoute', 'ngAnimate', 'hmTouc
 	};
 }])
 
-.controller('ResourceCtrl', ['$scope', '$http', '$routeParams', '$timeout', 'olwConf', function($scope, $http, $routeParams, $timeout, olwConf) {
+.controller('ResourceCtrl', ['$scope', '$http', '$routeParams', '$timeout', '$filter', 'conf', 'sections', 'cdn', function($scope, $http, $routeParams, $timeout, $filter, conf, sections, cdn) {
 	var id = $routeParams.nameWithId.substring($routeParams.nameWithId.lastIndexOf('-') + 1)
 	  , start = 1;
 
@@ -32,19 +32,19 @@ angular.module('olwResource', ['olwConfService', 'ngRoute', 'ngAnimate', 'hmTouc
 	$scope.media = [];
 
 	$http
-		.jsonp(olwConf.api + '/resource-detailview/' + olwConf.index + id + '?callback=JSON_CALLBACK')
+		.jsonp(conf.urls.api + '/resource-detailview/' + conf.urls.apiIndexPathElement + id + '?callback=JSON_CALLBACK')
 		.success(function(result) {
 			var slug;
 			$scope.$parent.title = $scope.title = result.name;
 
 			// populate template with (merely) static data
-			$scope.users = result.users.map(olwConf.transformUser);
+			$scope.users = result.users.map($filter('username'));
 			$scope.date = parseInt(result.creationDate, 10);
 			$scope.code = result.code.split('-');
 			$scope.type = result.characteristicType;
 			if (result.areas) {
-				$scope.areas = result.areas.map(function(area) { return { title: area.code, url: olwConf.urlFor(area.code, area.id) }; });
-				$scope.$parent.slug = $scope.slug = olwConf.slug($scope.areas[0].title);
+				$scope.areas = result.areas.map(function(area) { return { title: area.code, url: sections.getPathElement(area.code, area.id) }; });
+				$scope.$parent.slug = $scope.slug = sections.getSlugForArea($scope.areas[0].title);
 			}
 			if (result.semesters) {
 				$scope.terms = result.semesters.map(function(term) {
@@ -53,12 +53,12 @@ angular.module('olwResource', ['olwConfService', 'ngRoute', 'ngAnimate', 'hmTouc
 			}
 			$scope.related = result.externalResources;
 			$scope.description = result.description;
-			$scope.sources = olwConf.sources(result.uuid, $scope.type);
+			$scope.sources = cdn.getSourcesForUuid(result.uuid, $scope.type);
 			delete $scope.sources.audio;
-			$scope.downloadUrl = olwConf.downloadUrl(result.uuid, $scope.type, $scope.title);
-			$scope.canvasShow = olwConf.resourceMainType($scope.type);
+			$scope.downloadUrl = cdn.getDownloadUrlForUuid(result.uuid, $scope.type, $scope.title);
+			$scope.canvasShow = cdn.getNatureOfCharacteristicType($scope.type);
 			if (result.childs.length > 0) {
-				angular.extend($scope.sources, {pdf: [olwConf.uuidUrl(result.childs[0]) + '/13.pdf']});
+				angular.extend($scope.sources, {pdf: [cdn.getUrlForUuid(result.childs[0]) + '/13.pdf']});
 			}
 			$scope.licenseTranslationParams = {
 				title: $scope.title,
@@ -125,7 +125,7 @@ angular.module('olwResource', ['olwConfService', 'ngRoute', 'ngAnimate', 'hmTouc
 				}
 			});
 
-			olwConf.fetchChapters(result.uuid, $scope.type, function(err, chapters) {
+			cdn.getChaptersForUuid(result.uuid, $scope.type, function(err, chapters) {
 				if (!err && chapters) {
 					$scope.chapters = chapters.map(function(chapter) {
 						return {
@@ -140,9 +140,9 @@ angular.module('olwResource', ['olwConfService', 'ngRoute', 'ngAnimate', 'hmTouc
 				$scope.htmlReady();
 			});
 			if (result.collections) {
-				$scope.collections = result.collections.map(function(collection) { return { title: collection.name, url: olwConf.urlFor(collection.name, collection.id) }; });
+				$scope.collections = result.collections.map(function(collection) { return { title: collection.name, url: sections.getPathElement(collection.name, collection.id) }; });
 
-				$http.jsonp(olwConf.api + '/collection-detailview/' + result.collections[0].id + '?callback=JSON_CALLBACK')
+				$http.jsonp(conf.urls.api + '/collection-detailview/' + result.collections[0].id + '?callback=JSON_CALLBACK')
 					.success(function(result) {
 						// find next if id is top level
 						angular.forEach(result.collectionElements, function(collectionElement, index) {
