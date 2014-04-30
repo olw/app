@@ -21,5 +21,6 @@ app$ bower install
 # start grunt
 app$ grunt watch --force
 # start http-server
+app$ cd build
 app/build$ http-server
 ```
