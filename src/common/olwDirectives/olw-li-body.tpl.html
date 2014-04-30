@@ -1,0 +1,11 @@
+<div class="media-body olw-media-body">
+	<a ng-href="#!/{{url}}">
+		<i class="hidden-md hidden-lg fa fa-chevron-right fa-2x pull-right"></i>
+		<div class="olw-media-topping" ng-show="subtitle">{{subtitle}}</div>
+		<h4 class="media-heading" ng-show="title">{{title}}
+			<span class="hidden-xs hidden-sm pull-right badge {{badge.classes}}" ng-repeat="badge in badges">{{badge.title}}</span></h4>
+		<p class="hidden-md hidden-lg" ng-show="badges">
+			<span class="badge {{badge.classes}}" ng-repeat="badge in badges">{{badge.title}}</span>
+		</p>
+	</a>
+</div>

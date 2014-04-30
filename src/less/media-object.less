@@ -1,0 +1,47 @@
+.media {
+	margin: 0;
+	padding:10px;
+	background-color:@color-white;
+	cursor:pointer;
+	&:hover, &:active, &:focus {
+		background-color:@color-light-grey;
+	}
+
+	& + & {
+		@media screen and (max-width: @breakpoint-md) {
+			border-top: 1px solid @color-medium-grey;
+		}
+	}
+}
+
+.olw-media-topping {
+	color: @color-dark-grey;
+	font-weight: 200;
+	font-size: (@font-size-xs * 1.3);
+}
+
+.media-heading {
+	color: @color-black;
+	font-weight: 400;
+	font-size: (@font-size-xs * 1.5);
+	line-height: 1.3;
+}
+
+.media-body a,
+.media-body a:hover,
+.media-body a:focus {
+	text-decoration: none;
+}
+
+.media-object {
+	background-image: url(img/icon/collection.svg);
+	background-repeat:no-repeat;
+	height:32px;
+	width:32px;
+	vertical-align:middle;
+	text-align:center;
+	padding-top:10px;
+	padding-left:0px;
+	padding-right:8px;
+	margin-top:5px;
+}

@@ -1,0 +1,198 @@
+<!doctype html>
+
+<html lang="de" ng-app="olw" ng-controller="AppCtrl">
+<!-- $Id: index.html 4025 2014-04-11 07:35:22Z ow91fibo $ -->
+<head>
+	<title ng-bind="title + titleSeparator + titleSuffix">OpenLearnWare</title>
+
+	<meta charset="utf-8">
+	<meta name="fragment" content="!">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:site" content="@openlearnware">
+	<meta name="twitter:title" content="{{ 'PAGE_TITLE' | translate }}">
+	<meta name="twitter:description" content="{{ 'PAGE_DESCRIPTION' | translate }}">
+	<meta name="twitter:creator" content="@openlearnware">
+	<!-- FIXME static url -->
+	<meta name="twitter:image:src" content="https://openlearnware.tu-darmstadt.de/resources/img/olw-logo.png">
+
+	<meta property="og:title" content="{{ 'PAGE_TITLE' | translate }}"/>
+	<meta property="og:type" content="website"/>
+	<!-- FIXME static url -->
+	<meta property="og:url" content="https://openlearnware.tu-darmstadt.de"/>
+	<!-- FIXME static url -->
+	<meta property="og:image" content="https://openlearnware.tu-darmstadt.de/resources/img/olw-logo.png"/>
+	<meta property="og:description" content="{{ 'PAGE_DESCRIPTION' | translate }}"/>
+
+	<link rel="icon" href="assets/img/logo/olw-favicon.png" type="image/png">
+	<link rel="apple-touch-icon" href="assets/img/logo/olw-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/logo/olw-touch-icon-ipad.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="assets/img/logo/olw-touch-icon-2x.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="assets/img/logo/olw-touch-icon-ipad-2x.png">
+
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,400italic,600italic">
+<% styles.forEach(function(file) { %>	<link rel="stylesheet" href="<%= file %>">
+<% } ); %>
+</head>
+
+<body id="app" class="olw-menu-container" ng-class="{'olw-in': openNavigation}" ng-init="openNavigation = false" hm-drag="consume($event)">
+	<div class="navbar navbar-default navbar-static-top">
+	<nav role="navigation">
+		<div class="container">
+			<div class="col-xs-2 col-sm-4 col-md-5 col-md-push-5">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle visible-xs" ng-click="openNavigation = !openNavigation">
+						<i class="fa fa-bars fa-fw fa-2x"></i>
+					</button>
+					<button type="button" class="navbar-toggle visible-sm" ng-click="openNavigation = !openNavigation">
+						<span class="fa-stack fa-1x"><i class="fa fa-bars fa-fw fa-2x fa-stack-1x"></i></span> <span style="padding:0 .5em 0 1em">{{'BUTTON_TOGGLE_NAVIGATION' | translate}}</span>
+					</button>
+					<button type="button" class="navbar-toggle hidden-xs hidden-sm" ng-click="openNavigation = !openNavigation">
+						<small>{{'BUTTON_TOGGLE_NAVIGATION' | translate}}</small>
+						<br>
+						<span>{{'BUTTON_TOGGLE_NAVIGATION_EXPLORE' | translate}}</span>
+					</button>
+					<a href="#!/about" class="navbar-toggle hidden-xs hidden-sm">
+						<small>{{'PAGE_TITLE' | translate}}</small>
+						<br>
+						<span>{{'LINK_ABOUT' | translate}}</span>
+					</a>
+				</div>
+			</div>
+			<div class="col-xs-6 col-sm-4 col-md-5 col-md-pull-5">
+				<a class="navbar-brand" href="#!/"><span class="sr-only">{{ 'PAGE_TITLE' | translate }}</span></a>
+			</div>
+			<div class="col-xs-4 col-sm-3 col-sm-push-1 col-md-2 col-md-push-0">
+				<div class="navbar-right navbar-search visible-xs">
+					<span class="input-group-btn">
+						<button class="btn btn-default navbar-right pull-right" style="background:none;border:none;box-shadow:none" ng-click="showMobileSearch=!showMobileSearch"><span class="fa-stack fa-1x"><i class="fa fa-search fa-lg fa-stack-1x"></i></span></button>
+					</span>
+				</div>
+				<form class="navbar-right navbar-search input-group hidden-xs" action="">
+					<span class="input-group-btn">
+						<button type="submit" class="btn btn-default navbar-right left" ng-click="executeQuery()"><i class="fa fa-search"></i></button>
+					</span>
+					<input type="text" class="form-control" ng-model="query">
+				</form>
+			</div>
+		</div>
+		<div class="container-fluid visible-xs">
+		<div class="col-xs-12" ng-hide="!showMobileSearch">
+				<form class="navbar-right navbar-search input-group" action="">
+					<span class="input-group-btn">
+						<button type="submit" class="btn btn-default navbar-right left" ng-click="executeQuery()"><i class="fa fa-search"></i></button>
+					</span>
+					<input type="text" class="form-control" ng-model="query">
+					<span class="input-group-btn">
+						<button class="btn btn-default navbar-right right" ng-click="query=''"><i class="fa fa-times"></i></button>
+					</span>
+				</form>
+		</div>
+	</div>
+	</nav>
+	</div>
+	<div class="olw-menu-left hidden-lg hidden-md" ng-show="openNavigation">
+		<!--<ul class="nav nav-pills nav-stacked">
+			<li class="olw-nav-pill-bar-inverse"><a href="#!/sync"><i class="fa fa-qrcode fa-2x"></i> {{ 'BUTTON_SYNCHRONIZE' | translate }}</a></li>
+		</ul>-->
+		<ul ng-repeat="slug in orderedSections" class="nav nav-pills nav-stacked">
+			<li ng-class="['olw-nav-pill-bar-' + slug]"><a ng-href="#!/section/{{sections[slug].url}}" ng-class="'text-' + slug" translate>SECTION_{{slug}}</a></li>
+			<li ng-repeat="area in sections[slug].content" ng-class="'olw-nav-pill-bar-' + slug"><a ng-href="#!/area/{{area.url}}" translate>AREA_{{area.id}}</a></li>
+		</ul>
+	</div>
+	<div class="container olw-menu-top hidden-xs hidden-sm" ng-show="openNavigation">
+		<!--<div class="col-md-3">
+			<ul class="nav nav-pills nav-stacked olw-nav-unpadded">
+				<li><h4><a href="#!/sync"><i class="fa fa-qrcode fa-2x"></i> {{ 'BUTTON_SYNCHRONIZE' | translate }}</a></h4></li>
+			</ul>
+		</div>-->
+		<div class="col-md-4" ng-repeat="slug in orderedSections">
+			<ul class="nav nav-pills nav-stacked olw-nav-unpadded">
+				<li><h4><a ng-href="#!/section/{{sections[slug].url}}" ng-class="['text-' + slug, 'text-' + slug + '-hover']" translate>SECTION_{{slug}}</a></h4></li>
+				<li ng-repeat="area in sections[slug].content"><a ng-href="#!/area/{{area.url}}" translate>AREA_{{area.id}}</a></li>
+			</ul>
+		</div>
+	</div>
+<!-- 	<div class="olw-view-animate-container" ng-class="'olw-animation-' + animation"> -->
+		<div ng-view class="olw-animation"></div>
+<!-- 	</div> -->
+	<div class="container-fluid">
+		<div class="row olw-logo-row" ng-class="'grained-bg-' + slug">
+			<div class="col-md-12" style="padding-right:0">
+				<div olw-img-brand></div>
+			</div>
+			<div class="col-md-12 hidden-xs hidden-sm">
+				<div class="container">
+					<div class="col-md-3">
+						<a href="http://www.open-access.net/"><img src="assets/img/logo/open-access.svg" class="img-responsive"></a>
+					</div>
+					<div class="col-md-3">
+						<a href="http://www.unesco.de/open_educational_resources.html"><img src="assets/img/logo/oer.svg" class="img-responsive"></a>
+					</div>
+					<div class="col-md-3">
+						<a href="http://opensource.org/"><img src="assets/img/logo/opensource.svg" class="img-responsive"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer class="olw-footer-container">
+		<div class="container">
+			<div class="row">
+				<div class="hidden-xs col-sm-3">
+					<h4>{{'PAGE_TITLE' | translate}}</h4>
+					<ul class="nav nav-stacked nav-pills olw-nav-unpadded">
+						<li><a href="https://twitter.com/openlearnware"><span class="fa-stack fa-lg">
+							<i class="fa fa-circle fa-stack-2x"></i>
+							<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+						</span>
+						Twitter</a></li>
+						<li><a href="#!/about"><span class="fa-stack fa-lg">
+							<i class="fa fa-circle fa-stack-2x"></i>
+							<i class="fa fa-info fa-stack-1x fa-inverse"></i>
+						</span>
+						{{'LINK_ABOUT' | translate}}</a></li>
+						<!--<li><a href="#!/blog">{{'LINK_BLOG' | translate}}</a></li>
+						<li><a href="#!/press">{{'LINK_PRESS' | translate}}</a></li>
+						<li><a href="https://github.com/olw">{{'LINK_CODE' | translate}}</a></li>
+						<li><a href="http://olw.github.io/api">{{'LINK_API' | translate}}</a></li>-->
+					</ul>
+				</div>
+				<div class="hidden-xs col-sm-3" ng-repeat="slug in orderedSections">
+					<h4 class="olw-hyphens"><a ng-href="#!/section/{{sections[slug].url}}" ng-class="['text-' + slug, 'text-' + slug + '-hover']" translate>SECTION_{{slug}}</a></h4>
+					<ul class="nav nav-stacked nav-pills olw-nav-unpadded">
+						<li ng-repeat="area in sections[slug].content"><a ng-href="#!/area/{{area.url}}" translate>AREA_{{area.id}}</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="row olw-footer-row-imprint">
+				<div class="col-sm-12">
+				<p class="text-center small">
+					<span class="text-muted visible-inline-xs">{{'PAGE_SERVER_ABBR' | translate}}</span>
+					<span class="text-muted hidden-inline-xs">{{'PAGE_SERVER' | translate}} &middot; {{'PAGE_SERVER_ADDRESS_STREET' | translate}} &middot; {{'PAGE_SERVER_ADDRESS_CITY' | translate}}</span>
+					| <a href="#!/imprint">{{'PAGE_IMPRINT' | translate}}</a>
+					<!--| <a href="#!/privacy">{{'PAGE_PRIVACY' | translate}}</a>-->
+				</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-route.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-animate.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-touch.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/hammer.js/1.0.6/hammer.min.js"></script>
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<% scripts.forEach(function(file) { %>	<script src="<%= file %>"></script>
+<% } ); %>
+</body>
+
+</html>

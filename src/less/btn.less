@@ -1,0 +1,70 @@
+.btn {
+	&:active,
+	&.active {
+		.box-shadow(none);
+	}
+}
+
+.olw-btn:extend(.btn-default) {
+	margin:20px;
+	@media screen and (min-width: @breakpoint-sm) {
+		width:300px;
+	}
+}
+
+.olw-btn:disabled {
+	color:@color-grey
+}
+
+.olw-btn-gw:extend(.olw-btn) {
+	background-color:@color-gw;
+	border-color:@color-gw;
+	color:@color-white;
+	&:hover, &:active, &:focus {
+		border-color: @color-gw;
+		color:@color-gw;
+	};
+	&:disabled {
+		color:@color-grey
+	}
+}
+
+.olw-btn-nw:extend(.olw-btn) {
+	background-color:@color-nw;
+	border-color:@color-nw;
+	color:@color-white;
+	&:hover, &:active, &:focus {
+		border-color: @color-nw;
+		color:@color-nw;
+	};
+	&:disabled {
+		color:@color-grey
+	}
+}
+
+.olw-btn-iw:extend(.olw-btn) {
+	background-color:@color-iw;
+	border-color:@color-iw;
+	color:@color-white;
+	&:hover, &:active, &:focus {
+		border-color: @color-iw;
+		color:@color-iw;
+	};
+	&:disabled {
+		color:@color-grey
+	}
+}
+
+.olw-btn-grey:extend(.olw-btn) {
+	background-color:@color-grey;
+	border-color:@color-grey;
+	color:@color-white;
+	&:hover, &:active, &:focus {
+		border-color: @color-grey;
+		color:@color-grey;
+	};
+	&:disabled {
+		color:@color-grey
+	}
+}
+
