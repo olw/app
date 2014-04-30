@@ -7,6 +7,7 @@ angular.module('olwConfigurationService', ['ng'])
         },
         urls: {
             api: 'https://openlearnware.tu-darmstadt.de/olw-rest-db/api',
+            apiIndexPathElement: 'index/',
             cdn: 'https://olw-material.hrz.tu-darmstadt.de/olw-konv-repository/material',
             services: 'https://testolw.hrz.tu-darmstadt.de/services'
         }
