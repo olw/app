@@ -1,4 +1,4 @@
-angular.module('olw', ['templates-app', 'templates-common', 'olwDirectives', 'olwFilters', 'olwHome', 'olwArea', 'olwResource', 'olwSearch', 'olwSection', 'olwCollection', 'olwContact', 'olwImprint', 'olwAbout', 'olwConfigurationService', 'olwSectionsService', 'ngRoute', 'ngAnimate', 'hmTouchEvents', 'pascalprecht.translate', 'btford.markdown', 'ng', 'seo'])
+angular.module('olw', ['templates-app', 'templates-common', 'olwDirectives', 'olwHome', 'olwArea', 'olwResource', 'olwSearch', 'olwSection', 'olwCollection', 'olwContact', 'olwImprint', 'olwAbout', 'olwConfigurationService', 'olwSectionsService', 'ngRoute', 'ngAnimate', 'hmTouchEvents', 'pascalprecht.translate', 'btford.markdown', 'ng', 'seo'])
 
 .config(['$routeProvider', '$locationProvider', '$sceProvider', '$translateProvider', function($routeProvider, $locationProvider, $sceProvider, $translateProvider) {
 	$locationProvider
