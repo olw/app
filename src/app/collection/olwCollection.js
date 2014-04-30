@@ -1,4 +1,4 @@
-angular.module('olwCollection', ['ngRoute', 'ngAnimate', 'olwConfService', 'ng', 'seo'])
+angular.module('olwCollection', ['olwConfigurationService', 'olwSectionsService', 'olwUsernameFilter', 'ngRoute', 'ngAnimate', 'ng', 'seo'])
 
 .config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/collection/:nameWithId', {
@@ -7,7 +7,7 @@ angular.module('olwCollection', ['ngRoute', 'ngAnimate', 'olwConfService', 'ng',
 	});
 }])
 
-.controller('CollectionCtrl', ['$scope', '$http', '$routeParams', '$filter', 'olwConf', function($scope, $http, $routeParams, $filter, olwConf) {
+.controller('CollectionCtrl', ['$scope', '$http', '$routeParams', '$filter', 'conf', 'sections', function($scope, $http, $routeParams, $filter, conf, sections) {
 	var id = $routeParams.nameWithId.substring($routeParams.nameWithId.lastIndexOf('-')+1);
 	$scope.$parent.title = 'Sammlung';
 	
@@ -18,15 +18,15 @@ angular.module('olwCollection', ['ngRoute', 'ngAnimate', 'olwConfService', 'ng',
 			history = JSON.parse(localStorage.getItem(id));
 			$scope.resources.push({
 				title: resource.name,
-				users: resource.users.map(olwConf.transformUser),
-				url: olwConf.urlFor(resource.name, id),
+				users: resource.users.map($filter('username')),
+				url: sections.getPathElement(resource.name, id),
 				watched: ((history) ? Math.round(100 * history.current / history.duration) : 0)
 			});
 		}
 	};
 	
 	$http
-		.jsonp(olwConf.api + '/collection-detailview/' + olwConf.index + id + '?callback=JSON_CALLBACK')
+		.jsonp(conf.urls.api + '/collection-detailview/' + conf.urls.apiIndexPathElement + id + '?callback=JSON_CALLBACK')
 		.success(function(result) {
 			var slug;
 			
@@ -37,13 +37,13 @@ angular.module('olwCollection', ['ngRoute', 'ngAnimate', 'olwConfService', 'ng',
 				$scope.area = {
 					translation: $filter('translate')('AREA_' + result.areas[0].id),
 					title: result.areas[0].name,
-					url: olwConf.urlFor(result.areas[0].name, result.areas[0].id)
+					url: sections.getPathElement(result.areas[0].name, result.areas[0].id)
 				};
-				$scope.$parent.slug = $scope.slug = olwConf.slug($scope.area.title);
+				$scope.$parent.slug = $scope.slug = sections.getSlugForArea($scope.area.title);
 			}
 			
 			
-			$scope.users = result.users.map(olwConf.transformUser);
+			$scope.users = result.users.map($filter('username'));
 			$scope.terms = result.semesters.map(function(term) { 
 				return { year : term.year, part : term.part }; 
 			});
