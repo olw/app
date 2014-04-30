@@ -12,10 +12,10 @@ Getting started
 $ sudo npm install -g grunt-cli karma bower less coffee-script http-server
 # clone this repository
 $ git clone https://github.com/olw/app
-# init git flow branching model
-$ git flow init
-# install from configuration files
 $ cd app
+# init git flow branching model
+app$ git flow init
+# install from configuration files
 app$ npm install
 app$ bower install
 # start grunt
@@ -24,3 +24,5 @@ app$ grunt watch --force
 app$ cd build
 app/build$ http-server
 ```
+
+To use this frontend with your own configuration, edit `src/common/olwConfigurationService/olwConfigurationService.js`.
