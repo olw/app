@@ -1,0 +1,12 @@
+{
+  "name": "olw-app",
+  "version": "0.0.1",
+  "devDependencies": {
+  	"hammerjs": "*",
+    "angular-translate": "*",
+    "angular-translate-loader-url": "*",
+    "angular-translate-loader-static-files": "*",
+    "angular-seo": "*",
+    "angular-hammer": "*"
+  }
+}
