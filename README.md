@@ -2,7 +2,7 @@ app
 ===
 [![Gitter chat](https://badges.gitter.im/olw.png)](https://gitter.im/olw) [trello board](https://trello.com/b/QVlNFXdz/project-board)
 
-web frontend to our files, communicating with the backend via REST
+Web frontend to our files, communicating with the backend via REST. Based on [ng-boilerplate](https://github.com/ngbp/ngbp).
 
 Getting started
 ---------------
@@ -12,8 +12,10 @@ Getting started
 $ sudo npm install -g grunt-cli karma bower less coffee-script http-server
 # clone this repository
 $ git clone https://github.com/olw/app
-$ cd app
+# init git flow branching model
+$ git flow init
 # install from configuration files
+$ cd app
 app$ npm install
 app$ bower install
 # start grunt
