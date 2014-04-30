@@ -1,4 +1,4 @@
-angular.module('olwSection', ['ngRoute', 'olwConfService', 'pascalprecht.translate', 'ng', 'seo'])
+angular.module('olwSection', ['olwConfigurationService', 'olwSectionsService', 'olwUsernameFilter', 'ngRoute', 'pascalprecht.translate', 'ng', 'seo'])
 
 .config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/section/:nameWithSlug', {
@@ -7,16 +7,15 @@ angular.module('olwSection', ['ngRoute', 'olwConfService', 'pascalprecht.transla
 	});
 }])
 
-.controller('SectionCtrl', ['$scope', '$http', '$routeParams', 'olwConf', '$timeout', '$filter', function($scope, $http, $routeParams, olwConf, $timeout, $filter) {
+.controller('SectionCtrl', ['$scope', '$http', '$routeParams', '$timeout', '$filter', 'conf', 'sections', function($scope, $http, $routeParams, $timeout, $filter, conf, sections) {
 	$scope.$parent.slug = $scope.slug = $routeParams.nameWithSlug.substring($routeParams.nameWithSlug.lastIndexOf('-') + 1);
 	$scope.$parent.title = $scope.title = $filter('translate')('SECTION_' + $scope.slug);
 	
 	$scope.filter = { language : { german : { id : 1, enabled : true}, english : {id : 2, enabled : true} } };
 	$scope.isEnabled = function(filter, prop) { return $scope.filter[filter][prop].enabled; };
 	$scope.toggleFilter = function(filter, prop) {
-		$scope.filter[filter][prop].enabled = !$scope.filter[filter][prop].enabled;
-		
 		var eachDisabled = true;
+		$scope.filter[filter][prop].enabled = !$scope.filter[filter][prop].enabled;
 		
 		if(!$scope.filter[filter][prop].enabled) {
 			for(var p1 in $scope.filter[filter]) {
@@ -38,8 +37,6 @@ angular.module('olwSection', ['ngRoute', 'olwConfService', 'pascalprecht.transla
 		}
 		
 		$scope.fetch($scope.amount, true);
-		
-		
 	};
 	
 	$scope.amount = 10;
@@ -49,13 +46,13 @@ angular.module('olwSection', ['ngRoute', 'olwConfService', 'pascalprecht.transla
 	$scope.highlights = [];
 	
 	$scope.moreAvailable = true;
-	$scope.getSlugFor = olwConf.slug;
+	$scope.getSlugFor = sections.getSlugForArea;
 	
 	// Randomgenerator used for random Highlights - returns random integer value of intervall [0,x]
 	var rh = function(x) { return Math.round(Math.random() * x);};
 	
 	// Prepare area ids for query - ?area=1&area=2
-	var filterByArea = olwConf.sections[$scope.slug].content.map(function(a) { return "area=" + a.id; } ).join('&');
+	var filterByArea = sections.sections[$scope.slug].content.map(function(a) { return "area=" + a.id; } ).join('&');
 	var filterByLanguage = function() {
 		var filterByLanguage = [];
 		for(var l in $scope.filter.language) {
@@ -72,7 +69,7 @@ angular.module('olwSection', ['ngRoute', 'olwConfService', 'pascalprecht.transla
 		return collection.areas.map(function(area) {
 			return {
 				title: $filter('translate')('AREA_' + area.id),
-				classes: 'badge-' + $scope.getSlugFor(area.name)
+				classes: 'badge-' + sections.getSlugForArea(area.name)
 			};
 		});
 	};
@@ -82,16 +79,16 @@ angular.module('olwSection', ['ngRoute', 'olwConfService', 'pascalprecht.transla
 		if (update) { $scope.page = 0; $scope.collections = [];	$scope.highlights = []; }
 		
 		$http
-			.jsonp(olwConf.api + '/collection-overview/filter/' + olwConf.index +'?&elements=' + amount + '&' + filterByLanguage() + '&page=' + ($scope.page++) + '&' + filterByArea + '&callback=JSON_CALLBACK')
+			.jsonp(conf.urls.api + '/collection-overview/filter/' + conf.urls.apiIndexPathElement +'?&elements=' + amount + '&' + filterByLanguage() + '&page=' + ($scope.page++) + '&' + filterByArea + '&callback=JSON_CALLBACK')
 			.success(function(result) {
 				$scope.totalElements = result.totalElements;
 				$scope.moreAvailable = result.totalElements > amount * $scope.page;
 				
 				angular.forEach(result.elements, function(collection) {
 					$scope.collections.push({ 
-							url: olwConf.urlFor(collection.name, collection.id),
+							url: sections.getPathElement(collection.name, collection.id),
 							title: collection.name,
-							users: collection.users.map(olwConf.transformUser),
+							users: collection.users.map($filter('username')),
 							areas: collection.areas,
 							numberOfResources : collection.uuids.length
 					});
