@@ -13,7 +13,6 @@ module.exports = function ( grunt ) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-ngmin');
   grunt.loadNpmTasks('grunt-html2js');
-  grunt.loadNpmTasks('grunt-ftp-deploy');
   grunt.loadNpmTasks('grunt-exec');
 
   /**
@@ -425,11 +424,6 @@ module.exports = function ( grunt ) {
    * The default task is to build and compile.
    */
   grunt.registerTask( 'default', [ 'build', 'compile' ] );
-
-  /**
-   * The deploy task ftps everything in build_dir to dominikschreiber.com/olw
-   */
-  grunt.registerTask( 'deploy', [ 'default', 'ftp-deploy' ] );
 
   /**
    * The `build` task gets your app ready to run for development and testing.
