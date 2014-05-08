@@ -88,78 +88,53 @@ angular.module('olwCdnService', ['olwConfigurationService', 'olwCamelcaseFilter'
 			  , url = cdn.getUrlForUuid(uuid);
 
 			$q.all(['1.mp4', '2.mp4', '3.mp4', '4.mp4', '7.mp3', '8.ogg', '9.mp4', '13.pdf', '30.zip', '90.mp4', '105.webm', '106.webm', '205.webm'].map(function(filename) {
-				var q = $q.defer();
-				console.log('HEAD', url + '/' + filename);
-				$http.head(url + '/' + filename).success(function(result) {
-					q.resolve(result);
-				});
+				var q = $q.defer()
+				  , path = url + '/' + filename;
+				$http.head(path)
+					.success(function(result) {
+						q.resolve({ name: filename, path: path });
+					})
+					.error(function(result) {
+						q.resolve(false);
+					});
 				return q.promise;
 			})).then(function(result) {
-				var concatenated;
-				result.forEach(function(value) {
-					concatenated.concat(value.data);
-				});
-				deferred.resolve(concatenated);
-			});
+				var files = result.filter(function(i) { return i; })
+				  , onlyPath = function(f) { return f.path; }
+				  , sources = {
+					  pdf: files.filter(function(file) {
+							  return ['13.pdf'].indexOf(file.name) > -1;
+						  }).map(onlyPath),
+					  audio: files.filter(function(file) {
+							  return ['7.mp3', '8.ogg'].indexOf(file.name) > -1;
+						  }).map(onlyPath),
+					  video: files.filter(function(file) {
+							  return ['1.mp4', '2.mp4', '4.mp4', '105.webm', '106.webm'].indexOf(file.name) > -1;
+						  }).map(onlyPath),
+					  lecturer: files.filter(function(file) {
+							return ['9.mp4', '90.mp4', '205.webm'].indexOf(file.name) > -1;
+						}).map(onlyPath)
+				  	}
+				  , key;
 			
-			/*
-            switch (type) {
-                case 1:
-                    sources = {
-                        pdf: ['13.pdf'].map(toAbsoluteUrl)
-                    };
-                    break;
-                case 2:
-                    sources = {
-                        video: ['106.webm', '2.mp4', '4.mp4'].map(toAbsoluteUrl),
-                        // audio: ['8.ogg', '7.mp3'].map(toAbsoluteUrl)
-                    };
-                    break;
-                case 3:
-                    sources = {
-                        audio: ['8.ogg', '7.mp3'].map(toAbsoluteUrl)
-                    };
-                    break;
-                case 4:
-                    sources = {
-                        video: ['105.webm', '1.mp4', '4.mp4'].map(toAbsoluteUrl),
-                        // audio: ['8.ogg', '7.mp3'].map(toAbsoluteUrl)
-                    };
-                    break;
-                case 5:
-                case 6:
-                    sources = {
-                        // TODO video and lecturer are switched in so many resources
-                        // that they are switched here
-                        // switch it back if problem is resolved
-                        lecturer: ['105.webm', '1.mp4', '4.mp4'].map(toAbsoluteUrl),
-                        // audio: ['8.ogg', '7.mp3'].map(toAbsoluteUrl),
-                        video: ['205.webm', '9.mp4', '90.mp4'].map(toAbsoluteUrl)
-                    };
-                    break;
-                case 7:
-                case 8:
-                    sources = {
-                        // audio: ['8.ogg', '7.mp3'].map(toAbsoluteUrl),
-                        lecturer: ['205.webm', '9.mp4', '90.mp4'].map(toAbsoluteUrl)
-                    };
-                    break;
-                case 9:
-                    sources = {
-                        raw: ['30.zip'].map(toAbsoluteUrl)
-                    };
-                    break;
-                case 10:
-                    sources = {
-                        video: ['3.mp4', '106.webm', '2.mp4', '4.mp4'].map(toAbsoluteUrl),
-                        // audio: ['8.ogg', '7.mp3'].map(toAbsoluteUrl)
-                        // lecturer: ['9.mp4', '90.mp4'].map(toAbsoluteUrl)
-                    };
-                    break;
-                default:
-                    sources = false;
-                    break;
-            } */
+				// for camtasia files that have only one file instead of two
+				if (sources.video.length === 0) {
+					sources.video = sources.lecturer;
+					delete sources.lecturer;
+				}
+				// in video files audio should not be shown at all
+				if (sources.video.length > 0) {
+					delete sources.audio;
+				}
+				
+				for (key in sources) {
+					if (sources.hasOwnProperty(key) && sources[key].length === 0) {
+						delete sources[key];
+					}
+				}
+				
+				deferred.resolve(sources);
+			});
 
             return deferred.promise;
         },
