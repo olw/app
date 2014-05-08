@@ -1,13 +1,16 @@
 {
-    "name": "olw-app",
-    "version": "0.0.1",
-    "author": "Technische Universität Darmstadt",
-    "homepage": "https://openlearnware.tu-darmstadt.de",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/olw/app"
-    },
-    "devDependencies": {
+  "name": "olw-app",
+  "version": "0.0.1",
+  "author": "Technische Universität Darmstadt",
+  "homepage": "https://openlearnware.tu-darmstadt.de",
+  "repository": {
+  "type": "git",
+    "url": "https://github.com/olw/app"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
     "grunt": "*",
     "grunt-contrib-concat": "*",
     "grunt-contrib-copy": "*",
@@ -19,5 +22,5 @@
     "grunt-ngmin": "*",
     "grunt-contrib-less": "*",
     "grunt-exec": "*"
-    }
+  }
 }
