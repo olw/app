@@ -43,6 +43,8 @@ angular.module('olwResource', ['olwConfigurationService', 'olwSectionsService', 
 			$scope.date = parseInt(result.creationDate, 10);
 			$scope.code = result.code.split('-');
 			$scope.type = result.characteristicType;
+			$scope.related = result.externalResources;
+			$scope.description = result.description;
 			if (result.areas) {
 				$scope.areas = result.areas.map(function(area) { return { title: area.code, url: sections.getPathElement(area.code, area.id) }; });
 				$scope.$parent.slug = $scope.slug = sections.getSlugForArea($scope.areas[0].title);
@@ -52,31 +54,27 @@ angular.module('olwResource', ['olwConfigurationService', 'olwSectionsService', 
 					return { year : term.year, part : 'SEMESTER_PART_' + term.part }; 
 				});
 			}
-			$scope.related = result.externalResources;
-			$scope.description = result.description;
-			cdn.getSourcesForUuid(result.uuid, $scope.type).then(function(result) {
-				console.log('result =', result);
-				$scope.sources = result;
-			}, function(error) {
-				console.log('error =', error);
+			
+			$scope.canvasShow = cdn.getNatureOfCharacteristicType($scope.type);
+			cdn.getSourcesForUuid(result.uuid, $scope.type).then(function(sources) {
+				$scope.sources = sources;
+				if (result.childs.length > 0) {
+					angular.extend($scope.sources, {pdf: [cdn.getUrlForUuid(result.childs[0]) + '/13.pdf']});
+				}
+				if ($scope.canvasShow === 'pdf' || result.childs.length > 0) {
+					$scope.canvasShow = 'pdf';
+					$('#pdf').PDFDoc({
+						source: $scope.sources.pdf[0],
+						page: start
+					});
+				}
 			});
 			$scope.downloadUrl = cdn.getDownloadUrlForUuid(result.uuid, $scope.type, $scope.title);
-			$scope.canvasShow = cdn.getNatureOfCharacteristicType($scope.type);
-			if (result.childs.length > 0) {
-				angular.extend($scope.sources, {pdf: [cdn.getUrlForUuid(result.childs[0]) + '/13.pdf']});
-			}
 			$scope.licenseTranslationParams = {
 				title: $scope.title,
 				users: $scope.users.join(', ')
 			};
 
-			if ($scope.canvasShow == 'pdf' || result.childs.length > 0) {
-				$scope.canvasShow = 'pdf';
-				$('#pdf').PDFDoc({
-					source: $scope.sources.pdf[0],
-					page: start
-				});
-			}
 
 			// if tabs (video | pdf | audio) are switched, rebuild the media list
 			// to only contain the elements that are currently present
