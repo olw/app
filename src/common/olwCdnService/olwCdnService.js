@@ -5,7 +5,7 @@ angular.module('olwCdnService', ['olwConfigurationService', 'olwCamelcaseFilter'
         base: conf.urls.cdn,
         // returns a promise to get all chapters for the given uuid/type
         getChaptersForUuid: function(uuid, type) {
-			var deferred = $q.defer()
+            var deferred = $q.defer()
               , url = cdn.getUrlForUuid(uuid), tmp;
             if ([5,6,7,8].indexOf(type) > -1) {
                 $http
@@ -31,7 +31,7 @@ angular.module('olwCdnService', ['olwConfigurationService', 'olwCamelcaseFilter'
                 deferred.reject('only resources of type 5..8 (not "' + type + '") are considered to have chapters');
             }
 			
-			return deferred.promise;
+            return deferred.promise;
         },
         getDownloadUrlForUuid: function(uuid, type, title) {
             var url = cdn.getUrlForUuid(uuid)
@@ -86,56 +86,56 @@ angular.module('olwCdnService', ['olwConfigurationService', 'olwCamelcaseFilter'
         // returns a promise to get all available sources for the given uuid
         getSourcesForUuid: function(uuid) {
             var deferred = $q.defer()
-			  , url = cdn.getUrlForUuid(uuid);
+              , url = cdn.getUrlForUuid(uuid);
 
-			$q.all(['1.mp4', '2.mp4', '3.mp4', '4.mp4', '7.mp3', '8.ogg', '9.mp4', '13.pdf', '30.zip', '90.mp4', '105.webm', '106.webm', '205.webm'].map(function(filename) {
-				var q = $q.defer()
-				  , path = url + '/' + filename;
-				$http.head(path)
-					.success(function(result) {
-						q.resolve({ name: filename, path: path });
-					})
-					.error(function(result) {
-						q.resolve(false);
-					});
-				return q.promise;
-			})).then(function(result) {
-				var files = result.filter(function(i) { return i; })
-				  , onlyPath = function(f) { return f.path; }
-				  , sources = {
-					  pdf: files.filter(function(file) {
-							  return ['13.pdf'].indexOf(file.name) > -1;
-						  }).map(onlyPath),
-					  audio: files.filter(function(file) {
-							  return ['7.mp3', '8.ogg'].indexOf(file.name) > -1;
-						  }).map(onlyPath),
-					  video: files.filter(function(file) {
-							  return ['1.mp4', '2.mp4', '4.mp4', '105.webm', '106.webm'].indexOf(file.name) > -1;
-						  }).map(onlyPath),
-					  lecturer: files.filter(function(file) {
-							return ['9.mp4', '90.mp4', '205.webm'].indexOf(file.name) > -1;
-						}).map(onlyPath)
-				  	}
-				  , key;
-			
+            $q.all(['1.mp4', '2.mp4', '3.mp4', '4.mp4', '7.mp3', '8.ogg', '9.mp4', '13.pdf', '30.zip', '90.mp4', '105.webm', '106.webm', '205.webm'].map(function(filename) {
+                var q = $q.defer()
+                  , path = url + '/' + filename;
+                $http.head(path)
+                    .success(function(result) {
+                        q.resolve({ name: filename, path: path });
+                    })
+                    .error(function(result) {
+                        q.resolve(false);
+                    });
+                return q.promise;
+            })).then(function(result) {
+                var files = result.filter(function(i) { return i; })
+                  , onlyPath = function(f) { return f.path; }
+                  , sources = {
+                        pdf: files.filter(function(file) {
+                                return ['13.pdf'].indexOf(file.name) > -1;
+                            }).map(onlyPath),
+                        audio: files.filter(function(file) {
+                                return ['7.mp3', '8.ogg'].indexOf(file.name) > -1;
+                            }).map(onlyPath),
+                        video: files.filter(function(file) {
+                                return ['1.mp4', '2.mp4', '4.mp4', '105.webm', '106.webm'].indexOf(file.name) > -1;
+                            }).map(onlyPath),
+                        lecturer: files.filter(function(file) {
+                                return ['9.mp4', '90.mp4', '205.webm'].indexOf(file.name) > -1;
+                            }).map(onlyPath)
+                    }
+                  , key;
+
                 // for camtasia files that have only one file instead of two
-				if (sources.video.length === 0) {
-					sources.video = sources.lecturer;
-					delete sources.lecturer;
-				}
+                if (sources.video.length === 0) {
+                    sources.video = sources.lecturer;
+                    delete sources.lecturer;
+                }
                 // in video files audio should not be shown at all
-				if (sources.video.length > 0) {
-					delete sources.audio;
-				}
-				
-				for (key in sources) {
-					if (sources.hasOwnProperty(key) && sources[key].length === 0) {
-						delete sources[key];
-					}
-				}
-				
-				deferred.resolve(sources);
-			});
+                    if (sources.video.length > 0) {
+                    delete sources.audio;
+                }
+
+                for (key in sources) {
+                    if (sources.hasOwnProperty(key) && sources[key].length === 0) {
+                        delete sources[key];
+                    }
+                }
+
+                deferred.resolve(sources);
+            });
 
             return deferred.promise;
         },
