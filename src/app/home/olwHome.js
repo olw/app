@@ -1,4 +1,4 @@
-angular.module('olwHome', ['olwConfigurationService', 'olwSectionsService', 'olwUsernameFilter', 'ngRoute', 'ng', 'seo'])
+angular.module('olwHome', ['olwConfigurationService', 'olwSectionsService', 'olwUsernameFilter', 'olwJumbotronDirective', 'ngRoute', 'ng', 'seo'])
 
 .config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/', {
