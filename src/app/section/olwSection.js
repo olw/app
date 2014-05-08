@@ -1,4 +1,4 @@
-angular.module('olwSection', ['olwConfigurationService', 'olwSectionsService', 'olwUsernameFilter', 'ngRoute', 'pascalprecht.translate', 'ng', 'seo'])
+angular.module('olwSection', ['olwConfigurationService', 'olwSectionsService', 'olwUsernameFilter', 'olwLiDirective', 'olwLiBodyDirective', 'ngRoute', 'pascalprecht.translate', 'ng', 'seo'])
 
 .config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/section/:nameWithSlug', {
