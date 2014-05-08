@@ -1,31 +1,37 @@
 angular.module('olwCdnService', ['olwConfigurationService', 'olwCamelcaseFilter', 'ng'])
 
-.factory('cdn', ['conf', '$filter', '$http', function(conf, $filter, $http) {
+.factory('cdn', ['conf', '$filter', '$http', '$q', function(conf, $filter, $http, $q) {
     var cdn = {
         base: conf.urls.cdn,
-        getChaptersForUuid: function(uuid, type, next) {
-            var url = cdn.getUrlForUuid(uuid), tmp;
+		// returns a promise to get all chapters for the given uuid/type
+        getChaptersForUuid: function(uuid, type) {
+			var deferred = $q.defer()
+              , url = cdn.getUrlForUuid(uuid), tmp;
             if ([5,6,7,8].indexOf(type) > -1) {
                 $http
                     .jsonp(conf.urls.services + '/json?callback=JSON_CALLBACK&from=' + url + '/red5/100.xml')
                     .success(function(result) {
                         if (result.vorlesung.teilen) {
+							// if there is only a single chapter then result.vorlesung.teilen.teil is no array of objects but a single object
+							// so we must check if we have an array already or have to create one
                             try {
                                 tmp = result.vorlesung.teilen.teil.length;
-                                next(undefined, result.vorlesung.teilen.teil);
+                                deferred.resolve(result.vorlesung.teilen.teil);
                             } catch (err) {
-                                next(undefined, [result.vorlesung.teilen.teil]);
+                                deferred.resolve([result.vorlesung.teilen.teil]);
                             }
                         } else {
-                            next('malformed json file');
+                            deferred.reject('malformed json file');
                         }
                     })
                     .error(function(result) {
-                        next(result);
+                        deferred.reject(result);
                     });
             } else {
-                next('only resources of type 5..8 (not "' + type + '") are considered to have chapters');
+                deferred.reject('only resources of type 5..8 (not "' + type + '") are considered to have chapters');
             }
+			
+			return deferred.promise;
         },
         getDownloadUrlForUuid: function(uuid, type, title) {
             var url = cdn.getUrlForUuid(uuid)
@@ -78,69 +84,84 @@ angular.module('olwCdnService', ['olwConfigurationService', 'olwCamelcaseFilter'
             }
         },
         getSourcesForUuid: function(uuid, type) {
-            var url = cdn.getUrlForUuid(uuid)
-              , mapper = function(src) { return url + '/' + src; }
-              , result;
+            var deferred = $q.defer()
+			  , url = cdn.getUrlForUuid(uuid);
 
+			$q.all(['1.mp4', '2.mp4', '3.mp4', '4.mp4', '7.mp3', '8.ogg', '9.mp4', '13.pdf', '30.zip', '90.mp4', '105.webm', '106.webm', '205.webm'].map(function(filename) {
+				var q = $q.defer();
+				console.log('HEAD', url + '/' + filename);
+				$http.head(url + '/' + filename).success(function(result) {
+					q.resolve(result);
+				});
+				return q.promise;
+			})).then(function(result) {
+				var concatenated;
+				result.forEach(function(value) {
+					concatenated.concat(value.data);
+				});
+				deferred.resolve(concatenated);
+			});
+			
+			/*
             switch (type) {
                 case 1:
-                    result = {
-                        pdf: ['13.pdf'].map(mapper)
+                    sources = {
+                        pdf: ['13.pdf'].map(toAbsoluteUrl)
                     };
                     break;
                 case 2:
-                    result = {
-                        video: ['106.webm', '2.mp4', '4.mp4'].map(mapper),
-                        audio: ['8.ogg', '7.mp3'].map(mapper)
+                    sources = {
+                        video: ['106.webm', '2.mp4', '4.mp4'].map(toAbsoluteUrl),
+                        // audio: ['8.ogg', '7.mp3'].map(toAbsoluteUrl)
                     };
                     break;
                 case 3:
-                    result = {
-                        audio: ['8.ogg', '7.mp3'].map(mapper)
+                    sources = {
+                        audio: ['8.ogg', '7.mp3'].map(toAbsoluteUrl)
                     };
                     break;
                 case 4:
-                    result = {
-                        video: ['105.webm', '1.mp4', '4.mp4'].map(mapper),
-                        audio: ['8.ogg', '7.mp3'].map(mapper)
+                    sources = {
+                        video: ['105.webm', '1.mp4', '4.mp4'].map(toAbsoluteUrl),
+                        // audio: ['8.ogg', '7.mp3'].map(toAbsoluteUrl)
                     };
                     break;
                 case 5:
                 case 6:
-                    result = {
+                    sources = {
                         // TODO video and lecturer are switched in so many resources
                         // that they are switched here
                         // switch it back if problem is resolved
-                        lecturer: ['105.webm', '1.mp4', '4.mp4'].map(mapper),
-                        audio: ['8.ogg', '7.mp3'].map(mapper),
-                        video: ['205.webm', '9.mp4', '90.mp4'].map(mapper)
+                        lecturer: ['105.webm', '1.mp4', '4.mp4'].map(toAbsoluteUrl),
+                        // audio: ['8.ogg', '7.mp3'].map(toAbsoluteUrl),
+                        video: ['205.webm', '9.mp4', '90.mp4'].map(toAbsoluteUrl)
                     };
                     break;
                 case 7:
                 case 8:
-                    result = {
-                        audio: ['8.ogg', '7.mp3'].map(mapper),
-                        lecturer: ['205.webm', '9.mp4', '90.mp4'].map(mapper)
+                    sources = {
+                        // audio: ['8.ogg', '7.mp3'].map(toAbsoluteUrl),
+                        lecturer: ['205.webm', '9.mp4', '90.mp4'].map(toAbsoluteUrl)
                     };
                     break;
                 case 9:
-                    result = {
-                        raw: ['30.zip'].map(mapper)
+                    sources = {
+                        raw: ['30.zip'].map(toAbsoluteUrl)
                     };
                     break;
                 case 10:
-                    result = {
-                        video: ['3.mp4', '106.webm', '2.mp4', '4.mp4'].map(mapper),
-                        audio: ['8.ogg', '7.mp3'].map(mapper),
-                        // lecturer: ['9.mp4', '90.mp4'].map(mapper)
+                    sources = {
+                        video: ['3.mp4', '106.webm', '2.mp4', '4.mp4'].map(toAbsoluteUrl),
+                        // audio: ['8.ogg', '7.mp3'].map(toAbsoluteUrl)
+                        // lecturer: ['9.mp4', '90.mp4'].map(toAbsoluteUrl)
                     };
                     break;
                 default:
-                    result = false;
+                    sources = false;
                     break;
-            }
+            } */
 
-            return result;
+            return deferred.promise;
         },
         getUrlForUuid: function(uuid) {
             return [cdn.base].concat(uuid.replace(/-/g, '').match(/.{2}/g)).join('/');
@@ -149,3 +170,7 @@ angular.module('olwCdnService', ['olwConfigurationService', 'olwCamelcaseFilter'
     
     return cdn;
 }]);
+
+function flatten(array) {
+	return [].concat.apply([], array);
+}

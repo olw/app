@@ -38,6 +38,7 @@ angular.module('olwResource', ['olwConfigurationService', 'olwSectionsService', 
 			$scope.$parent.title = $scope.title = result.name;
 
 			// populate template with (merely) static data
+			$scope.sources = {};
 			$scope.users = result.users.map($filter('username'));
 			$scope.date = parseInt(result.creationDate, 10);
 			$scope.code = result.code.split('-');
@@ -53,8 +54,12 @@ angular.module('olwResource', ['olwConfigurationService', 'olwSectionsService', 
 			}
 			$scope.related = result.externalResources;
 			$scope.description = result.description;
-			$scope.sources = cdn.getSourcesForUuid(result.uuid, $scope.type);
-			delete $scope.sources.audio;
+			cdn.getSourcesForUuid(result.uuid, $scope.type).then(function(result) {
+				console.log('result =', result);
+				$scope.sources = result;
+			}, function(error) {
+				console.log('error =', error);
+			});
 			$scope.downloadUrl = cdn.getDownloadUrlForUuid(result.uuid, $scope.type, $scope.title);
 			$scope.canvasShow = cdn.getNatureOfCharacteristicType($scope.type);
 			if (result.childs.length > 0) {
@@ -125,20 +130,22 @@ angular.module('olwResource', ['olwConfigurationService', 'olwSectionsService', 
 				}
 			});
 
-			cdn.getChaptersForUuid(result.uuid, $scope.type, function(err, chapters) {
-				if (!err && chapters) {
-					$scope.chapters = chapters.map(function(chapter) {
-						return {
-							title: chapter.kapitel,
-							from: chapter.startZeit,
-							length: chapter.laenge,
-							fromRendered: (new Date(new Date(0).setHours(0)).setSeconds(chapter.startZeit)),
-							active: false
-						};
-					});
-				}
-				$scope.htmlReady();
-			});
+			cdn.getChaptersForUuid(result.uuid, $scope.type)
+				.then(function(chapters) {
+					if (chapters) {
+						$scope.chapters = chapters.map(function(chapter) {
+							return {
+								title: chapter.kapitel,
+								from: chapter.startZeit,
+								length: chapter.laenge,
+								fromRendered: (new Date(new Date(0).setHours(0)).setSeconds(chapter.startZeit)),
+								active: false
+							};
+						});
+					}
+					$scope.htmlReady();
+				});	
+			
 			if (result.collections) {
 				$scope.collections = result.collections.map(function(collection) { return { title: collection.name, url: sections.getPathElement(collection.name, collection.id) }; });
 
