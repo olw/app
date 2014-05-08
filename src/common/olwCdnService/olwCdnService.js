@@ -83,7 +83,8 @@ angular.module('olwCdnService', ['olwConfigurationService', 'olwCamelcaseFilter'
                     return 'video';
             }
         },
-        getSourcesForUuid: function(uuid, type) {
+		// returns a promise to get all available sources for the given uuid
+        getSourcesForUuid: function(uuid) {
             var deferred = $q.defer()
 			  , url = cdn.getUrlForUuid(uuid);
 

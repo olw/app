@@ -55,7 +55,7 @@ angular.module('olwResource', ['olwConfigurationService', 'olwSectionsService', 
 				});
 			}
 			
-			cdn.getSourcesForUuid(result.uuid, $scope.type).then(function(sources) {
+			cdn.getSourcesForUuid(result.uuid).then(function(sources) {
 				$scope.sources = sources;
 				$scope.canvasShow = cdn.getNatureOfCharacteristicType($scope.type);
 				if (result.childs.length > 0) {
