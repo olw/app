@@ -55,9 +55,9 @@ angular.module('olwResource', ['olwConfigurationService', 'olwSectionsService', 
 				});
 			}
 			
-			$scope.canvasShow = cdn.getNatureOfCharacteristicType($scope.type);
 			cdn.getSourcesForUuid(result.uuid, $scope.type).then(function(sources) {
 				$scope.sources = sources;
+				$scope.canvasShow = cdn.getNatureOfCharacteristicType($scope.type);
 				if (result.childs.length > 0) {
 					angular.extend($scope.sources, {pdf: [cdn.getUrlForUuid(result.childs[0]) + '/13.pdf']});
 				}
