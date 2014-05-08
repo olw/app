@@ -101,7 +101,7 @@ angular.module('olwCdnService', ['olwConfigurationService', 'olwCamelcaseFilter'
                 return q.promise;
             })).then(function(result) {
                 var files = result.filter(function(i) { return i; })
-                  , onlyPath = function(f) { return f.path; }
+                  , onlyPath = function(f) { return f.path; }
                   , sources = {
                         pdf: files.filter(function(file) {
                                 return ['13.pdf'].indexOf(file.name) > -1;
