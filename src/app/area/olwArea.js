@@ -1,4 +1,4 @@
-angular.module('olwArea', ['ngRoute', 'olwConfService', 'ng', 'seo'])
+angular.module('olwArea', ['olwConfigurationService', 'olwSectionsService', 'olwUsernameFilter', 'ngRoute', 'ng', 'seo'])
 
 .config(['$routeProvider', function($routeProvider) {
 	$routeProvider.when('/area/:nameWithId', {
@@ -7,14 +7,14 @@ angular.module('olwArea', ['ngRoute', 'olwConfService', 'ng', 'seo'])
 	});
 }])
 
-.controller('AreaCtrl', ['$scope', '$http', '$routeParams', 'olwConf', '$timeout', '$filter', function($scope, $http, $routeParams, olwConf, $timeout, $filter) {
+.controller('AreaCtrl', ['$scope', '$http', '$routeParams', '$timeout', '$filter', 'conf', 'sections', function($scope, $http, $routeParams, $timeout, $filter, conf, sections) {
 	$scope.id = $routeParams.nameWithId.substring($routeParams.nameWithId.lastIndexOf('-') + 1);
 	
 	$http
-		.jsonp(olwConf.api + '/area/' + $scope.id + '?callback=JSON_CALLBACK')
+		.jsonp(conf.urls.api + '/area/' + $scope.id + '?callback=JSON_CALLBACK')
 		.success(function(result) {
 			$scope.$parent.title = $scope.title = $filter('translate')('AREA_' + result.id);
-			$scope.$parent.slug = $scope.slug = olwConf.slug(result.code || result.name);
+			$scope.$parent.slug = $scope.slug = sections.getSlugForArea(result.code || result.name);
 		});
 	
 	$scope.filter = { language : { german : { id : 1, enabled : true}, english : {id : 2, enabled : true} } };
@@ -52,7 +52,6 @@ angular.module('olwArea', ['ngRoute', 'olwConfService', 'ng', 'seo'])
 	$scope.page = 0;
 	$scope.collections = [];
 	$scope.moreAvailable = true;
-	$scope.getSlugFor = olwConf.slug;
 	
 	var filterByLanguage = function() {
 		var filterByLanguage = [];
@@ -70,17 +69,16 @@ angular.module('olwArea', ['ngRoute', 'olwConfService', 'ng', 'seo'])
 		if (!amount) { amount = $scope.amount; }
 		if (update) { $scope.page = 0; $scope.collections = [];	}
 		
-		console.log('index: ' + olwConf.index);
-		$http.jsonp(olwConf.api + '/collection-overview/filter/' + olwConf.index + '?&elements=' + amount + '&' + filterByLanguage() + '&page=' + ($scope.page++) + '&area=' + $scope.id + '&callback=JSON_CALLBACK').success(function(result) {
+		$http.jsonp(conf.urls.api + '/collection-overview/filter/' + conf.urls.apiIndexPathElement + '?&elements=' + amount + '&' + filterByLanguage() + '&page=' + ($scope.page++) + '&area=' + $scope.id + '&callback=JSON_CALLBACK').success(function(result) {
 			
 			$scope.totalElements = result.totalElements;
 			$scope.moreAvailable = result.totalElements > amount * $scope.page;
 			
 			angular.forEach(result.elements, function(collection) {
 				$scope.collections.push({ 
-						url: olwConf.urlFor(collection.name, collection.id),
+						url: sections.getPathElement(collection.name, collection.id),
 						title: collection.name,
-						users: collection.users.map(olwConf.transformUser),
+						users: collection.users.map($filter('username')),
 						areas: collection.areas,
 						numberOfResources : collection.uuids.length
 				});
@@ -94,7 +92,7 @@ angular.module('olwArea', ['ngRoute', 'olwConfService', 'ng', 'seo'])
 		return collection.areas.map(function(area) {
 			return {
 				title: $filter('translate')('AREA_' + area.id),
-				classes: 'badge-' + $scope.getSlugFor(area.name)
+				classes: 'badge-' + sections.getSlugForArea(area.name)
 			};
 		});
 	};
