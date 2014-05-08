@@ -3,7 +3,7 @@ angular.module('olwCdnService', ['olwConfigurationService', 'olwCamelcaseFilter'
 .factory('cdn', ['conf', '$filter', '$http', '$q', function(conf, $filter, $http, $q) {
     var cdn = {
         base: conf.urls.cdn,
-		// returns a promise to get all chapters for the given uuid/type
+        // returns a promise to get all chapters for the given uuid/type
         getChaptersForUuid: function(uuid, type) {
 			var deferred = $q.defer()
               , url = cdn.getUrlForUuid(uuid), tmp;
@@ -12,8 +12,8 @@ angular.module('olwCdnService', ['olwConfigurationService', 'olwCamelcaseFilter'
                     .jsonp(conf.urls.services + '/json?callback=JSON_CALLBACK&from=' + url + '/red5/100.xml')
                     .success(function(result) {
                         if (result.vorlesung.teilen) {
-							// if there is only a single chapter then result.vorlesung.teilen.teil is no array of objects but a single object
-							// so we must check if we have an array already or have to create one
+                            // if there is only a single chapter then result.vorlesung.teilen.teil is no array of objects but a single object
+                            // so we must check if we have an array already or have to create one
                             try {
                                 tmp = result.vorlesung.teilen.teil.length;
                                 deferred.resolve(result.vorlesung.teilen.teil);
@@ -83,7 +83,7 @@ angular.module('olwCdnService', ['olwConfigurationService', 'olwCamelcaseFilter'
                     return 'video';
             }
         },
-		// returns a promise to get all available sources for the given uuid
+        // returns a promise to get all available sources for the given uuid
         getSourcesForUuid: function(uuid) {
             var deferred = $q.defer()
 			  , url = cdn.getUrlForUuid(uuid);
@@ -118,12 +118,12 @@ angular.module('olwCdnService', ['olwConfigurationService', 'olwCamelcaseFilter'
 				  	}
 				  , key;
 			
-				// for camtasia files that have only one file instead of two
+                // for camtasia files that have only one file instead of two
 				if (sources.video.length === 0) {
 					sources.video = sources.lecturer;
 					delete sources.lecturer;
 				}
-				// in video files audio should not be shown at all
+                // in video files audio should not be shown at all
 				if (sources.video.length > 0) {
 					delete sources.audio;
 				}
