@@ -1,6 +1,6 @@
 app
 ===
-[![Gitter chat](https://badges.gitter.im/olw.png)](https://gitter.im/olw) [trello board](https://trello.com/b/QVlNFXdz/project-board)
+[![Build Status](https://travis-ci.org/olw/app.svg?branch=develop)](https://travis-ci.org/olw/app) [![Gitter chat](https://badges.gitter.im/olw.png)](https://gitter.im/olw) [trello board](https://trello.com/b/QVlNFXdz/project-board)
 
 Web frontend to our files, communicating with the backend via REST. Based on [ng-boilerplate](https://github.com/ngbp/ngbp).
 
