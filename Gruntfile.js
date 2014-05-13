@@ -13,7 +13,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-ngmin');
   grunt.loadNpmTasks('grunt-html2js');
-  grunt.loadNpmTasks('grunt-exec');
+  grunt.loadNpmTasks('grunt-zip');
 
   /**
    * Load in our build configuration file.
@@ -120,6 +120,16 @@ module.exports = function (grunt) {
             expand: true
           }
        ]
+      },
+      compile_war: {
+        files: [
+          {
+            cwd: 'src/war',
+            src: ['**/*'],
+            dest: '<%= compile_dir %>',
+            expand: true
+          }
+        ]
       }
     },
 
@@ -399,11 +409,11 @@ module.exports = function (grunt) {
       }
     },
     
-    exec: {
+    zip: {
       war: {
-        cmd: function() {
-          return 'mkdir tmp && cp -R bin/* tmp && cp -R war/* tmp && cd tmp && jar -cvf OpenLearnWare.war * && mv OpenLearnWare.war ../bin && cd .. && rm -r tmp';
-        }
+        cwd: '<%= compile_dir %>',
+        dest: '<%= compile_dir %>/<%= pkg.name %>.war',
+        src: ['<%= compile_dir %>/**']
       }
     }
   };
@@ -438,7 +448,7 @@ module.exports = function (grunt) {
    * The `compile` task gets your app ready for deployment by concatenating and
    * minifying your code.
    */
-  grunt.registerTask('package', ['test', 'less:compile', 'copy:compile_assets', 'copy:compile_vendor', 'ngmin', 'concat', 'uglify', 'index:compile', 'exec:war']);
+  grunt.registerTask('package', ['test', 'less:compile', 'copy:compile_assets', 'copy:compile_vendor', 'copy:compile_war', 'ngmin', 'concat', 'uglify', 'index:compile', 'zip:war']);
   
   /**
    * A utility function to get all app JavaScript sources.
