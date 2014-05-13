@@ -4,15 +4,12 @@
 }
 </style>
 <div olw-jumbotron class="olw-about-page-header-bg">
-	<p class="lead text-center visible-xs">
-		Über <olw-brand></olw-brand>
-	</p>
-	<p class="lead hidden-xs">
-		<olw-brand></olw-brand> ist eine Online-Plattform<br class="visible-lg">
-		der TU Darmstadt, die den <em style="font-weight:600">freien Zugang<br class="visible-lg">
-		und Austausch</em> von Lernmaterialien<br class="visible-lg">
-		für alle Interessierten ermöglicht
-	</p>
+	<div class="lead text-center visible-xs">
+		<div translate="ABOUT_HEADER_2" translate-compile></div>
+	</div>
+	<div class="lead hidden-xs">
+		<div translate="ABOUT_HEADER_1" translate-compile></div>
+	</div>
 </div>
 <div class="container">
 	<div class="row">
@@ -20,7 +17,9 @@
 			<img src="assets/img/logo/oer-grey.svg" class="img-responsive">
 		</div>
 		<div class="col-xs-12 col-md-8">
-			<p class="p">{{'ABOUT_OER' | translate}}</p>
+			<div class="p">
+				<div translate="ABOUT_OER" translate-compile></div>
+			</div>
 		</div>
 	</div>
 	<div class="row">
@@ -28,18 +27,20 @@
 			<img src="assets/img/logo/oa-grey.svg" class="img-responsive">
 		</div>
 		<div class="col-xs-12 col-md-9 col-md-pull-3">
-			<p class="p">{{'ABOUT_ACCESS' | translate}}</p>
+			<div class="p">
+				<div translate="ABOUT_ACCESS" translate-compile></div>
+			</div>
 		</div>
 	</div>
 </div>
 <div class="olw-about-tiles">
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<p class="text-center" style="font-weight:300">derzeit mit <em style="font-weight:600">{{nrResources}}</em> Materialien<br>aus <em style="font-weight:600">{{nrAreas}}</em> Themenbereichen</p>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div translate="ABOUT_MATERIAL" translate-compile></div>
+			</div>
 		</div>
 	</div>
-</div>
 </div>
 <div class="container">
 	<div class="row">
@@ -47,22 +48,22 @@
 			<img src="assets/img/logo/cc-grey.svg" class="img-responsive">
 		</div>
 		<div class="col-xs-12 col-md-10">
-			<p class="p">{{'ABOUT_CC' | translate}}</p>
+			<div class="p">
+				<div translate="ABOUT_CC" translate-compile></div>
+			</div>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<p class="p">Die Bildungsinitiative <a href="//www.e-learning.tu-darmstadt.de/openlearnware/mehr_zu_oer/index.de.jsp" target="_blank">Open Educational Resources</a> (OER) und auch die Community, die sie mit Inhalten füllt, sind auf der ganzen Welt aktiv. Neben dem <olw-brand></olw-brand> Angebot der TU Darmstadt gibt es noch viele weitere Plattformen die Teil der Initiative sind.</p>
-			<p class="p">Hier finden Sie andere Plattformen mit offenen Inhalten:</p>
-			<ul class="nav nav-justified nav-pills">
-				<li class="p"><a href="//oercommons.org">OER Commons</a></li>
-				<li class="p"><a href="//ocw.mit.edu">OpenCourseWare</a></li>
-				<li class="p"><a href="//search.creativecommons.org/" target="_blank">CC Search</a></li>
-				<li class="p"><a href="//www.e-teaching.org/materialien/mediendatenbanken/" target="_blank">Mediendatenbanken</a></li>
-			</ul>
+			<div class="p">
+				<div translate="ABOUT_FOOTER" translate-compile></div>
+				<ul class="nav nav-justified nav-pills">
+					<li class="p"><a href="//oercommons.org">OER Commons</a></li>
+					<li class="p"><a href="//ocw.mit.edu">OpenCourseWare</a></li>
+					<li class="p"><a href="//search.creativecommons.org/" target="_blank">CC Search</a></li>
+					<li class="p"><a href="//www.e-teaching.org/materialien/mediendatenbanken/" target="_blank">Mediendatenbanken</a></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </div>
-
-<!--<article id="about" btf-markdown="md">
-</article> -->
