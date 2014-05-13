@@ -19,7 +19,6 @@
     "grunt-contrib-less": "*",
     "grunt-contrib-uglify": "*",
     "grunt-contrib-watch": "*",
-    "grunt-exec": "*",
     "grunt-html2js": "*",
     "grunt-ngmin": "*",
     "grunt-zip": "^0.13.0"
