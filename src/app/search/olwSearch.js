@@ -1,29 +1,40 @@
-angular.module('olwSearch', ['olwConfigurationService', 'olwSectionsService', 'olwUsernameFilter', 'ngRoute', 'ng', 'seo'])
+angular.module('olwSearch', [
+    'olwConfigurationService'
+  , 'olwMetaService'
+  , 'olwSectionsService'
+  , 'olwUsernameFilter'
+  , 'ngRoute'
+  , 'ng'
+  , 'seo'
+])
 
-.config(['$routeProvider', function($routeProvider) {
+.config(function($routeProvider) {
 	$routeProvider.when('/search', {
 		controller: 'SearchCtrl',
 		templateUrl: 'search/search.tpl.html'
 	});
-}])
+})
 
-.controller('SearchCtrl', ['$scope', '$http', '$routeParams','$location', '$filter', 'conf', 'sections', function($scope, $http, $routeParams, $location, $filter, conf, sections) {
+.controller('SearchCtrl', function($scope, $http, $routeParams, $location, $filter, $translate, conf, sections, meta) {
 	$scope.page = 0;
 	$scope.query = $location.search().query;
-	$scope.$parent.title = 'Suchergebnisse';
+	meta.title('Suchergebnisse');
+    meta.description(false);
 	$scope.$parent.slug = 'grey';
 	$scope.$parent.showMobileSearch = false;
 	
 	$scope.filter = { language : { german : { id : 1, enabled : true}, english : {id : 2, enabled : true} } };
 	$scope.isEnabled = function(filter, prop) { return $scope.filter[filter][prop].enabled; };
 	$scope.toggleFilter = function(filter, prop) {
-		$scope.filter[filter][prop].enabled = !$scope.filter[filter][prop].enabled;
-		
-		var eachDisabled = true;
+        var p1
+          , p2
+          , eachDisabled = true;
+
+        $scope.filter[filter][prop].enabled = !$scope.filter[filter][prop].enabled;
 		
 		if(!$scope.filter[filter][prop].enabled) {
-			for(var p1 in $scope.filter[filter]) {
-				if($scope.filter[filter][p1].enabled) {
+			for(p1 in $scope.filter[filter]) {
+				if($scope.filter[filter].hasOwnProperty(p1) && $scope.filter[filter][p1].enabled) {
 					eachDisabled = false;
 					break;
 				}
@@ -33,8 +44,8 @@ angular.module('olwSearch', ['olwConfigurationService', 'olwSectionsService', 'o
 		}
 		
 		if(eachDisabled) {
-			for(var p2 in $scope.filter[filter]) {
-				if(prop !== p2) {
+			for(p2 in $scope.filter[filter]) {
+				if($scope.filter[filter].hasOwnProperty(p2) && prop !== p2) {
 					$scope.filter[filter][p2].enabled = true;
 				}
 			}
@@ -52,9 +63,11 @@ angular.module('olwSearch', ['olwConfigurationService', 'olwSectionsService', 'o
 	$scope.getSlugFor = sections.getSlugForArea;
 	
 	var filterByLanguage = function() {
-		var filterByLanguage = [];
-		for(var l in $scope.filter.language) {
-			if($scope.filter.language[l].enabled) {
+		var l
+          , filterByLanguage = [];
+        
+		for (l in $scope.filter.language) {
+			if ($scope.filter.language.hasOwnProperty(l) && $scope.filter.language[l].enabled) {
 				filterByLanguage.push('language='+$scope.filter.language[l].id);
 			}
 		}
@@ -88,10 +101,12 @@ angular.module('olwSearch', ['olwConfigurationService', 'olwSectionsService', 'o
 
 	$scope.badges = function(collection) {
 		return collection.areas.map(function(area) {
-			return {
-				title: $filter('translate')('AREA_' + area.id),
-				classes: 'badge-' + sections.getSlugForArea(area.name)
-			};
+            return $translate('AREA_' + area.id).then(function(title) {
+                return {
+                    title: title,
+                    classes: 'badge-' + sections.getSlugForArea(area.name)
+                };
+            });
 		});
 	};
 	
@@ -102,4 +117,4 @@ angular.module('olwSearch', ['olwConfigurationService', 'olwSectionsService', 'o
 			$scope.$parent.animation = 'none';
 		}
 	});
-}]);
+});

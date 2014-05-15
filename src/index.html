@@ -2,39 +2,47 @@
 
 <html lang="de" ng-app="olw" ng-controller="AppCtrl">
 <head>
-	<title ng-bind="title + titleSeparator + titleSuffix">OpenLearnWare</title>
+	<title ng-bind="meta.title() + titleSeparator + titleSuffix">OpenLearnWare</title>
 
 	<meta charset="utf-8">
 	<meta name="fragment" content="!">
 
+    <!-- mobile setup -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="default">
 
+    <!-- twitter cards -->
 	<meta name="twitter:card" content="summary">
-	<meta name="twitter:site" content="@openlearnware">
-	<meta name="twitter:title" content="{{ 'PAGE_TITLE' | translate }}">
-	<meta name="twitter:description" content="{{ 'PAGE_DESCRIPTION' | translate }}">
+	<meta name="twitter:site" content="{{meta.twitter()}}">
+	<meta name="twitter:title" content="{{meta.title()}}">
+	<meta name="twitter:description" content="{{meta.description()}}">
+	<meta name="twitter:image:src" content="{{meta.logo()}}">
+    <!-- the openlearnware project is the creator, please keep this as it is -->
 	<meta name="twitter:creator" content="@openlearnware">
-	<!-- FIXME static url -->
-	<meta name="twitter:image:src" content="https://openlearnware.tu-darmstadt.de/resources/img/olw-logo.png">
 
-	<meta property="og:title" content="{{ 'PAGE_TITLE' | translate }}"/>
+    <!-- facebook open graph -->
+	<meta property="og:title" content="{{meta.title()}}"/>
 	<meta property="og:type" content="website"/>
-	<!-- FIXME static url -->
-	<meta property="og:url" content="https://openlearnware.tu-darmstadt.de"/>
-	<!-- FIXME static url -->
-	<meta property="og:image" content="https://openlearnware.tu-darmstadt.de/resources/img/olw-logo.png"/>
-	<meta property="og:description" content="{{ 'PAGE_DESCRIPTION' | translate }}"/>
+	<meta property="og:url" content="{{$location.absUrl()}}"/>
+	<meta property="og:image" content="{{meta.logo()}}"/>
+	<meta property="og:description" content="{{meta.description()}}"/>
 
-	<link rel="icon" href="assets/img/logo/olw-favicon.png" type="image/png">
-	<link rel="apple-touch-icon" href="assets/img/logo/olw-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/logo/olw-touch-icon-ipad.png">
-	<link rel="apple-touch-icon" sizes="120x120" href="assets/img/logo/olw-touch-icon-2x.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="assets/img/logo/olw-touch-icon-ipad-2x.png">
+    <!-- fav-/appicons -->
+    <link rel="icon" sizes="16x16" href="assets/img/logo/olw-favicon-16.ico">
+	<link rel="icon" sizes="32x32" href="assets/img/logo/olw-favicon-32.ico">
+    <link rel="icon" sizes="57x57" href="assets/img/logo/olw-appicon-57x57.png">
+    <link rel="icon" sizes="72x72" href="assets/img/logo/olw-appicon-72x72.png">
+    <link rel="icon" sizes="114x114" href="assets/img/logo/olw-appicon-114x114.png">
+    <link rel="icon" sizes="144x144" href="assets/img/logo/olw-appicon-144x144.png">
+    
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/img/logo/olw-appicon-57x57.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/img/logo/olw-appicon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/img/logo/olw-appicon-114x114.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/img/logo/olw-appicon-144x144.png">
 
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <!-- stylesheets -->
 	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,400italic,600italic">
 <% styles.forEach(function(file) { %>	<link rel="stylesheet" href="<%= file %>">
 <% } ); %>
@@ -182,14 +190,6 @@
 			</div>
 		</div>
 	</footer>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-route.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-animate.min.js"></script>
-	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-touch.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/hammer.js/1.0.6/hammer.min.js"></script>
-	<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <% scripts.forEach(function(file) { %>	<script src="<%= file %>"></script>
 <% } ); %>
 </body>

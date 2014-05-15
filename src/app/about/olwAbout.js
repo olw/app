@@ -1,14 +1,24 @@
-angular.module('olwAbout', ['olwConfigurationService', 'ngRoute', 'pascalprecht.translate', 'ng', 'seo']) //, 'btford.markdown'])
+angular.module('olwAbout', [
+    'olwConfigurationService'
+  , 'olwMetaService'
+  , 'pascalprecht.translate'
+  , 'ngRoute'
+  , 'ng'
+  , 'seo'
+])
 
-.config(['$routeProvider', function($routeProvider) {
+.config(function($routeProvider) {
 	$routeProvider.when('/about', {
 		controller: 'AboutCtrl',
 		templateUrl: 'about/about.tpl.html'
 	});
-}])
+})
 
-.controller('AboutCtrl', ['$scope', '$http', '$filter', 'conf', function($scope, $http, $filter, conf) {
-	$scope.$parent.title = $scope.title = $filter('translate')('HEADLINE_ABOUT');
+.controller('AboutCtrl', function($scope, $http, $translate, conf, meta) {
+	$translate('HEADLINE_ABOUT').then(function(title) {
+        $scope.title = title;
+        meta.title($scope.title);
+    });
 	$scope.$parent.slug = 'gw';
 
 	$http.jsonp(conf.urls.api + '/resource?callback=JSON_CALLBACK').success(function(result) {
@@ -18,4 +28,4 @@ angular.module('olwAbout', ['olwConfigurationService', 'ngRoute', 'pascalprecht.
 	$http.jsonp(conf.urls.api + '/area?callback=JSON_CALLBACK').success(function(result) {
 		$scope.nrAreas = result.totalElements;
 	});
-}]);
+});

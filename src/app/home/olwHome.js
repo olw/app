@@ -1,14 +1,25 @@
-angular.module('olwHome', ['olwConfigurationService', 'olwSectionsService', 'olwUsernameFilter', 'olwJumbotronDirective', 'ngRoute', 'ng', 'seo'])
+angular.module('olwHome', [
+    'olwConfigurationService'
+  , 'olwSectionsService'
+  , 'olwMetaService'
+  , 'olwUsernameFilter'
+  , 'olwJumbotronDirective'
+  , 'olwImgBrandDirective'
+  , 'ngRoute'
+  , 'ng'
+  , 'seo'
+])
 
-.config(['$routeProvider', function($routeProvider) {
+.config(function($routeProvider) {
 	$routeProvider.when('/', {
 		controller: 'HomeCtrl',
 		templateUrl: 'home/home.tpl.html'
 	});
-}])
+})
 
-.controller('HomeCtrl', ['$scope', '$http', '$filter', 'conf', 'sections', function($scope, $http, $filter, conf, sections) {
-	$scope.$parent.title = 'Highlights';
+.controller('HomeCtrl', function($scope, $http, $filter, conf, sections, meta) {
+	meta.title('Highlights');
+    meta.description(false);
 	$scope.$parent.slug = 'gw';
 	
 	$scope.page = 0;
@@ -61,4 +72,4 @@ angular.module('olwHome', ['olwConfigurationService', 'olwSectionsService', 'olw
 	};
 
 	$scope.fetch(3);
-}]);
+});

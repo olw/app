@@ -1,4 +1,10 @@
-angular.module( 'olwImprint', ['ngRoute', 'pascalprecht.translate', 'ng', 'seo'])
+angular.module('olwImprint', [
+    'olwMetaService'
+  , 'ngRoute'
+  , 'pascalprecht.translate'
+  , 'ng'
+  , 'seo'
+])
 
 .config(function($routeProvider) {
 	return $routeProvider.when('/imprint', {
@@ -7,8 +13,11 @@ angular.module( 'olwImprint', ['ngRoute', 'pascalprecht.translate', 'ng', 'seo']
 	});
 })
 
-.controller('ImprintCtrl', ['$scope', '$filter', function($scope, $filter) {
-	$scope.$parent.title = $filter('translate')('PAGE_IMPRINT');
+.controller('ImprintCtrl', function($scope, $translate, meta) {
+    $translate('PAGE_IMPRINT').then(function(title) {
+        meta.title(title);
+        $scope.htmlReady();
+    });
+    meta.description(false);
 	$scope.$parent.slug = 'gw';
-	$scope.htmlReady();
-}]);
+});

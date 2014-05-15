@@ -1,15 +1,25 @@
-angular.module('olwCollection', ['olwConfigurationService', 'olwSectionsService', 'olwUsernameFilter', 'ngRoute', 'ngAnimate', 'ng', 'seo'])
+angular.module('olwCollection', [
+    'olwConfigurationService'
+  , 'olwMetaService'
+  , 'olwSectionsService'
+  , 'olwUsernameFilter'
+  , 'pascalprecht.translate'
+  , 'ngRoute'
+  , 'ngAnimate'
+  , 'ng'
+  , 'seo'
+])
 
-.config(['$routeProvider', function($routeProvider) {
+.config(function($routeProvider) {
 	$routeProvider.when('/collection/:nameWithId', {
 		controller: 'CollectionCtrl',
 		templateUrl: 'collection/collection.tpl.html'
 	});
-}])
+})
 
-.controller('CollectionCtrl', ['$scope', '$http', '$routeParams', '$filter', 'conf', 'sections', function($scope, $http, $routeParams, $filter, conf, sections) {
+.controller('CollectionCtrl', function(meta, $scope, $http, $routeParams, $filter, conf, sections) {
 	var id = $routeParams.nameWithId.substring($routeParams.nameWithId.lastIndexOf('-')+1);
-	$scope.$parent.title = 'Sammlung';
+	meta.title('Sammlung');
 	
 	$scope.resources = [];
 	$scope.addResource = function(raw, id) {
@@ -30,8 +40,10 @@ angular.module('olwCollection', ['olwConfigurationService', 'olwSectionsService'
 		.success(function(result) {
 			var slug;
 			
-			$scope.$parent.title = $scope.title = result.name;
+			$scope.title = result.name;
+            meta.title($scope.title);
 			$scope.description = result.description;
+            meta.description($scope.description);
 			
 			if (result.areas !== undefined && result.areas.length > 0) {
 				$scope.area = {
@@ -41,7 +53,6 @@ angular.module('olwCollection', ['olwConfigurationService', 'olwSectionsService'
 				};
 				$scope.$parent.slug = $scope.slug = sections.getSlugForArea($scope.area.title);
 			}
-			
 			
 			$scope.users = result.users.map($filter('username'));
 			$scope.terms = result.semesters.map(function(term) { 
@@ -70,4 +81,4 @@ angular.module('olwCollection', ['olwConfigurationService', 'olwSectionsService'
 			$scope.$parent.animation = 'none';
 		}
 	});
-}]);
+});
