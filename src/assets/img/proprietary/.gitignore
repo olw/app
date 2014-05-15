@@ -5,4 +5,7 @@
 # don't ignore the readme
 !README.md
 # don't ignore folders so that it is visible what files could be needed
-!*/
+!/area/
+!/logo/
+!/section/
+!/signature/
