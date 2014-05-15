@@ -19,3 +19,9 @@ signature/
     # for <slug> in the slugs of your sections [i.e. `gw`, `iw`, `nw`]
     - <slug>.png
 ```
+
+If you are from the tu darmstadt olw team, you can check out a filled version of this folder from the private svn:
+
+```bash
+svn checkout https://svn.hrz.tu-darmstadt.de/openlearnware/projects/proprietary
+```
