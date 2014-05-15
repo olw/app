@@ -7,8 +7,8 @@ However, you may want to add your own files here if you set up a personal instan
 ```yaml
 area/
     # for <id> in the ids of the areas [i.e. `1`, `2`, ..., `13`]
-    - <id>.jpg
-    - <id>-lofi.jpg
+    - <id>.jpg # high-resolution version
+    - <id>-lofi.jpg # low-resolution version
 logo/
     # see `/src/app/common/olwConfigurationService/olwConfigurationService.js` on how we use this
     - tu.svg
