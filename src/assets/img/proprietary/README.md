@@ -23,5 +23,6 @@ signature/
 If you are from the tu darmstadt olw team, you can check out a filled version of this folder from the private svn:
 
 ```bash
-svn checkout https://svn.hrz.tu-darmstadt.de/openlearnware/projects/proprietary
+cd /src/app/assets/img/proprietary
+svn checkout https://svn.hrz.tu-darmstadt.de/openlearnware/projects/proprietary .
 ```
