@@ -1,7 +1,11 @@
+@import 'variables.less';
+
 .jumbotron {
 	padding: 0;
+    @media (min-width: @breakpoint-sm) { padding-bottom: 10%; }
+    
 	height: 70%;
-	height: 70vh;
+	/*height: 70vh;*/
 	color: @color-white;
 	text-shadow: 0 0 10px fade(@color-black, 30%);
 
@@ -13,10 +17,10 @@
     &.padded {
         [ng-transclude] {
             margin-top: 10%;
-            margin-top: 10vh;
+            /*margin-top: 10vh;*/
             @media screen and (min-width: @breakpoint-sm) {
                 margin-top: 5%;
-                margin-top: 5vh;
+                /*margin-top: 5vh;*/
             }
         }
     }
