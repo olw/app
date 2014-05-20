@@ -1,3 +1,4 @@
+@import 'variables.less';
 
 body {
 	font-family: 'Open Sans', sans-serif;
@@ -20,7 +21,7 @@ h4 {
 
 .h1 {
 	font-size: 36px;
-	font-weight: 300;
+	font-weight: @font-weight-light;
 	@media screen and (min-width: @breakpoint-sm) {
 		font-size: 48px;
 	}
@@ -28,7 +29,7 @@ h4 {
 
 .h2 {
 	font-size: 24px;
-	font-weight: 600;
+	font-weight: @font-weight-bold;
 	@media screen and (min-width: @breakpoint-sm) {
 		font-size: 36px;
 	}
@@ -36,7 +37,7 @@ h4 {
 
 .h3 {
 	font-size: 20px;
-	font-weight: 600;
+	font-weight: @font-weight-bold;
 	@media screen and (min-width: @breakpoint-sm) {
 		font-size: 24px;
 	}
@@ -44,7 +45,7 @@ h4 {
 
 .h4 {
 	font-size: 18px;
-	font-weight: 300;
+	font-weight: @font-weight-light;
 	@media screen and (min-width: @breakpoint-sm) {
 		font-size: 20px;
 	}
@@ -57,7 +58,7 @@ h4 {
 
 .p {
 	font-size: (@font-size-xs * 1.2);
-	font-weight: 400;
+	font-weight: @font-weight-base;
 	line-height: 1.5;
 	@media screen and (min-width: @breakpoint-sm) {
 		font-size: (@font-size-sm * 1.2);
