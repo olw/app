@@ -1,5 +1,6 @@
 angular.module('olwAbout', [
     'olwConfigurationService'
+  , 'olwBrandDirective'
   , 'olwMetaService'
   , 'pascalprecht.translate'
   , 'ngRoute'
