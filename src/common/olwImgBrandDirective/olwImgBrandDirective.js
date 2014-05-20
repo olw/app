@@ -11,7 +11,8 @@ angular.module('olwImgBrandDirective', ['olwConfigurationService', 'ng'])
 		scope: {
 			alt: '@',
 			logo: '@',
-			url: '@'
+			url: '@',
+            text: '@'
 		},
 		templateUrl: 'olwImgBrandDirective/olw-img-brand.tpl.html'
 	};

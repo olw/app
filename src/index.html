@@ -132,7 +132,7 @@
 	<div class="container-fluid">
 		<div class="row olw-logo-row" ng-class="'grained-bg-' + slug">
 			<div class="col-md-12" style="padding-right:0">
-				<div olw-img-brand></div>
+				<div olw-img-brand text="{{'PAGE_SERVED_BY' | translate}}"></div>
 			</div>
 			<div class="col-md-12 hidden-xs hidden-sm">
 				<div class="container">
@@ -160,15 +160,19 @@
 							<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
 						</span>
 						Twitter</a></li>
+						<li><a href="https://github.com/olw"><span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-github-alt fa-stack-1x fa-inverse"></i>
+                        </span>
+                        {{'LINK_CODE' | translate}}</a></li>
 						<li><a href="#!/about"><span class="fa-stack fa-lg">
 							<i class="fa fa-circle fa-stack-2x"></i>
 							<i class="fa fa-info fa-stack-1x fa-inverse"></i>
 						</span>
 						{{'LINK_ABOUT' | translate}}</a></li>
 						<!--<li><a href="#!/blog">{{'LINK_BLOG' | translate}}</a></li>
-						<li><a href="#!/press">{{'LINK_PRESS' | translate}}</a></li>
-						<li><a href="https://github.com/olw">{{'LINK_CODE' | translate}}</a></li>
-						<li><a href="http://olw.github.io/api">{{'LINK_API' | translate}}</a></li>-->
+						<li><a href="#!/press">{{'LINK_PRESS' | translate}}</a></li>-->
+						<!--<li><a href="http://olw.github.io/api">{{'LINK_API' | translate}}</a></li>-->
 					</ul>
 				</div>
 				<div class="hidden-xs col-sm-3" ng-repeat="slug in orderedSections">
