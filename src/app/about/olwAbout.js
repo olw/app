@@ -21,12 +21,14 @@ angular.module('olwAbout', [
         meta.title($scope.title);
     });
 	$scope.$parent.slug = 'gw';
+    
+    $scope.nrs = {};
 
 	$http.jsonp(conf.urls.api + '/resource?callback=JSON_CALLBACK').success(function(result) {
-		$scope.nrResources = result.totalElements;
+		$scope.nrs.nrResources = result.totalElements;
         $scope.htmlReady();
 	});
 	$http.jsonp(conf.urls.api + '/area?callback=JSON_CALLBACK').success(function(result) {
-		$scope.nrAreas = result.totalElements;
+		$scope.nrs.nrAreas = result.totalElements;
 	});
 });
