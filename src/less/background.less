@@ -1,0 +1,84 @@
+@import 'variables.less';
+@import 'mixins.less';
+
+.bg-gw {
+	background-color: @color-gw;
+}
+.bg-iw {
+	background-color: @color-iw;
+}
+.bg-nw {
+	background-color: @color-nw;
+}
+
+.bg-grey {
+	background-color: @color-grey;
+}
+.bg-light-grey {
+	background-color: @color-light-grey;
+}
+
+.olw-landing-page-header-bg {
+	.overlay-bg(@color-gw-gradient-from, @color-gw-gradient-to, 70%, 'img/proprietary/LandingPage_Header.jpg');
+}
+.olw-about-page-header-bg {
+	.overlay-bg(@color-gw-gradient-from, @color-gw-gradient-to, 70%, 'img/proprietary/About_Header.jpg');
+}
+
+.bg-gradient-gw {
+	.linear-gradient(fade(@color-gw-gradient-from, 70%), fade(@color-gw-gradient-to, 70%));
+}
+.bg-gradient-iw {
+	.linear-gradient(fade(@color-iw-gradient-from, 70%), fade(@color-iw-gradient-to, 70%));
+}
+.bg-gradient-nw {
+	.linear-gradient(fade(@color-nw-gradient-from, 70%), fade(@color-nw-gradient-to, 70%));
+}
+
+.multilayer-bg-gw {
+	.multilayer-bg(@color-gw-gradient-from, @color-gw-gradient-to, 70%, 'img/proprietary/section/gw.jpg');
+}
+.multilayer-bg-iw { 
+	.multilayer-bg(@color-iw-gradient-from, @color-iw-gradient-to, 70%, 'img/proprietary/section/iw.jpg');
+}
+.multilayer-bg-nw { 
+	.multilayer-bg(@color-nw-gradient-from, @color-nw-gradient-to, 70%, 'img/proprietary/section/nw.jpg');
+}
+
+.multilayer-bg-1  { .olw-multilayer-bg-iw('1');  }
+.multilayer-bg-2  { .olw-multilayer-bg-iw('2');  }
+.multilayer-bg-3  { .olw-multilayer-bg-gw('3');  }
+.multilayer-bg-4  { .olw-multilayer-bg-iw('4');  }
+.multilayer-bg-5  { .olw-multilayer-bg-nw('5');  }
+.multilayer-bg-6  { .olw-multilayer-bg-nw('6');  }
+.multilayer-bg-7  { .olw-multilayer-bg-gw('7');  }
+.multilayer-bg-8  { .olw-multilayer-bg-gw('8');  }
+.multilayer-bg-9  { .olw-multilayer-bg-iw('9');  }
+.multilayer-bg-10 { .olw-multilayer-bg-gw('10'); }
+.multilayer-bg-11 { .olw-multilayer-bg-iw('11'); }
+.multilayer-bg-12 { .olw-multilayer-bg-gw('12'); }
+.multilayer-bg-13 { .olw-multilayer-bg-gw('13'); }
+
+.multilayer-bg-lofi-1  { .olw-multilayer-bg-iw('1-lofi');  }
+.multilayer-bg-lofi-2  { .olw-multilayer-bg-iw('2-lofi');  }
+.multilayer-bg-lofi-3  { .olw-multilayer-bg-gw('3-lofi');  }
+.multilayer-bg-lofi-4  { .olw-multilayer-bg-iw('4-lofi');  }
+.multilayer-bg-lofi-5  { .olw-multilayer-bg-nw('5-lofi');  }
+.multilayer-bg-lofi-6  { .olw-multilayer-bg-nw('6-lofi');  }
+.multilayer-bg-lofi-7  { .olw-multilayer-bg-gw('7-lofi');  }
+.multilayer-bg-lofi-8  { .olw-multilayer-bg-gw('8-lofi');  }
+.multilayer-bg-lofi-9  { .olw-multilayer-bg-iw('9-lofi');  }
+.multilayer-bg-lofi-10 { .olw-multilayer-bg-gw('10-lofi'); }
+.multilayer-bg-lofi-11 { .olw-multilayer-bg-iw('11-lofi'); }
+.multilayer-bg-lofi-12 { .olw-multilayer-bg-gw('12-lofi'); }
+.multilayer-bg-lofi-13 { .olw-multilayer-bg-gw('13-lofi'); }
+
+.grained-bg-gw {
+	.grained-bg('img/grain/gw.jpg', @color-gw-gradient-from, @color-gw-gradient-to, 70%);
+}
+.grained-bg-iw {
+	.grained-bg('img/grain/iw.jpg', @color-iw-gradient-from, @color-iw-gradient-to, 70%);
+}
+.grained-bg-nw {
+	.grained-bg('img/grain/nw.jpg', @color-nw-gradient-from, @color-nw-gradient-to, 70%);
+}
