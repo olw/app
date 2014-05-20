@@ -2,7 +2,7 @@
 	"PAGE_TITLE": "OpenLearnWare",
 	"PAGE_DESCRIPTION": "Die Plattform f&uuml;r offene Lernmaterialien an der TU Darmstadt.",
 	"PAGE_TEASER": "<p class='visible-xs'><strong class='dark lead'>Entdecke</strong> <small class='dark lead'>&</small><br><strong class='dark lead'>erlebe</strong><br><small>die offenen</small><br><strong>Vorlesungen</strong><br><span class='offset-xs-2'><small>und</small> <strong>Vorträge</strong></span><br><small class='offset-xs-1'>der TU Darmstadt</small></p><p class='hidden-xs'><strong class='dark lead'>Entdecke</strong> <small class='dark lead'>&</small> <strong class='dark lead'>erlebe</strong><br><span class='offset-sm-2'><small>die offenen</small> <strong>Vorlesungen</strong> <small>und</small></span><br><span class='offset-sm-1'><strong>Vorträge</strong> der TU Darmstadt</span></p>",
-	"PAGE_SERVED_BY": "bereitgestellt durch",
+	"PAGE_SERVED_BY": "Dieses Angebot wird bereitgestellt durch",
 	"PAGE_IMPRINT": "Impressum",
 	"PAGE_PRIVACY": "Datenschutz",
 	"PAGE_SERVER": "Technische Universität Darmstadt",
@@ -14,7 +14,7 @@
 	"LINK_BLOG": "Blog",
 	"LINK_CONTACT": "Kontakt",
 	"LINK_PRESS": "Presse",
-	"LINK_CODE": "Open Source Code",
+	"LINK_CODE": "GitHub",
 	"LINK_API": "API",
 
 	"HEADLINE_HIGHLIGHTS": "Highlights",
