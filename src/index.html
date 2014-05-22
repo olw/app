@@ -110,7 +110,7 @@
 	</nav>
 	</div>
     <!-- mobile menu -->
-	<div class="olw-menu-left hidden-lg hidden-md" ng-show="openNavigation">
+	<div class="olw-menu-left hidden-lg hidden-md">
 		<ul ng-repeat="slug in orderedSections" class="nav olw-nav">
 			<li ng-class="['olw-nav-pill-bar-' + slug]"><a ng-href="#!/section/{{sections[slug].url}}"><strong ng-class="'text-' + slug" translate>SECTION_{{slug}}</strong></a></li>
 			<li ng-repeat="area in sections[slug].content" ng-class="'olw-nav-pill-bar-' + slug"><a ng-href="#!/area/{{area.url}}" translate>AREA_{{area.id}}</a></li>

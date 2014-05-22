@@ -120,8 +120,7 @@ li.previous > a > i {
     .box-shadow(2px -2px 2px fade(@color-black, 10%));
 
 	@media screen and (max-width: @breakpoint-sm) {
-		.transform(translateX(-78%)); // fallback
-		.transform(translateX(~"calc(51px - 100%)"));
+		.transform(translateX(-100%));
 		width: 78%; // fallback
 		width: ~"calc(100% - 51px)";
 	}
