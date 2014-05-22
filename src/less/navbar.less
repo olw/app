@@ -52,14 +52,22 @@
 				line-height: .8;
 			}
 		}
+        
+        &:hover,
+        &:focus {
+            text-decoration: inherit;
+            color: inherit;
+            border-color: inherit;
+            background-color: inherit;
+        }
 
-		&:hover,
-		&:focus {
+		&:active,
+        &.active {
 			text-decoration: inherit;
 			@media screen and (max-width: @breakpoint-md) {
 				border-color: @color-white;
 				color: @color-white;
-				background-color: @color-gw;
+				background-color: @color-medium-grey;
 			}
 			@media screen and (min-width: @breakpoint-md) {
 				color: @color-medium-grey;
