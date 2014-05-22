@@ -92,11 +92,11 @@ li.previous > a > i {
 
 	&.olw-in {
 		@media screen and (max-width: @breakpoint-sm) {
-			left: 78%; // fallback
-			left: ~"calc(100% - 51px)";
+			.transform(translateX(78%)); // fallback
+			.transform(translateX(~"calc(100% - 51px)"));
 		}
 		@media screen and (min-width: @breakpoint-sm) and (max-width: @breakpoint-md) {
-			left: 285px; // TODO maybe add better computation in future
+			.transform(translateX(285px)); // TODO maybe add better computation in future
 		}
 	}
 }
@@ -120,13 +120,13 @@ li.previous > a > i {
     .box-shadow(2px -2px 2px fade(@color-black, 10%));
 
 	@media screen and (max-width: @breakpoint-sm) {
-		left: -78%; // fallback
-		left: ~"calc(51px - 100%)";
+		.transform(translateX(-78%)); // fallback
+		.transform(translateX(~"calc(51px - 100%)"));
 		width: 78%; // fallback
 		width: ~"calc(100% - 51px)";
 	}
 	@media screen and (min-width: @breakpoint-sm) and (max-width: @breakpoint-md) {
-		left: -285px;
+		.transform(translateX(-285px));
 		width: 285px;
 	}
 }
