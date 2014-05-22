@@ -1,7 +1,10 @@
+@import 'variables.less';
+@import 'mixins.less';
+
 .navbar {
 	margin-bottom: 0;
 	min-height: 0;
-	.box-shadow(0 1px 2px fade(@color-black, 10%));
+	.box-shadow(2px 2px 2px fade(@color-black, 10%));
 
 	.fa { color: @color-dark-grey; }
 
@@ -15,6 +18,12 @@
 	@media screen and (min-width: @breakpoint-sm) {
 		padding: @font-size-xs 0;
 	}
+}
+
+.olw-navbar-header-container {
+    @media (max-width: @breakpoint-sm) {
+        line-height: .1;
+    }
 }
 
 .navbar-default {
@@ -144,7 +153,7 @@
 	min-width: 8em;
 	margin: 0 15px;
 	padding-left: 0;
-	height: 46px;
+	height: 42px;
 	background-position:center;
 	
 	@media screen and (max-width: @breakpoint-sm) { 
