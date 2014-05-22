@@ -11,12 +11,12 @@ angular.module('olwSection', [
   , 'ng'
 ])
 
-.config(['$routeProvider', function($routeProvider) {
+.config(function($routeProvider) {
 	$routeProvider.when('/section/:nameWithSlug', {
 		controller: 'SectionCtrl',
 		templateUrl: 'section/section.tpl.html'
 	});
-}])
+})
 
 .controller('SectionCtrl', function($scope, $http, $routeParams, $timeout, $filter, $translate, conf, sections, meta) {
 	$scope.$parent.slug = $scope.slug = $routeParams.nameWithSlug.substring($routeParams.nameWithSlug.lastIndexOf('-') + 1);
