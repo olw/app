@@ -93,7 +93,7 @@ li.previous > a > i {
 	&.olw-in {
 		@media screen and (max-width: @breakpoint-sm) {
 			left: 78%; // fallback
-			left: ~"calc(100% - 76px)";
+			left: ~"calc(100% - 51px)";
 		}
 		@media screen and (min-width: @breakpoint-sm) and (max-width: @breakpoint-md) {
 			left: 285px; // TODO maybe add better computation in future
@@ -116,9 +116,9 @@ li.previous > a > i {
 
 	@media screen and (max-width: @breakpoint-sm) {
 		left: -78%; // fallback
-		left: ~"calc(76px - 100%)";
+		left: ~"calc(51px - 100%)";
 		width: 78%; // fallback
-		width: ~"calc(100% - 76px)";
+		width: ~"calc(100% - 51px)";
 	}
 	@media screen and (min-width: @breakpoint-sm) and (max-width: @breakpoint-md) {
 		left: -285px;
