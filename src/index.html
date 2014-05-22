@@ -104,6 +104,7 @@
 	</div>
 	</nav>
 	</div>
+    <!-- mobile menu -->
 	<div class="olw-menu-left hidden-lg hidden-md" ng-show="openNavigation">
 		<!--<ul class="nav nav-pills nav-stacked">
 			<li class="olw-nav-pill-bar-inverse"><a href="#!/sync"><i class="fa fa-qrcode fa-2x"></i> {{ 'BUTTON_SYNCHRONIZE' | translate }}</a></li>
@@ -113,6 +114,7 @@
 			<li ng-repeat="area in sections[slug].content" ng-class="'olw-nav-pill-bar-' + slug"><a ng-href="#!/area/{{area.url}}" translate>AREA_{{area.id}}</a></li>
 		</ul>
 	</div>
+    <!-- desktop menu -->
 	<div class="container olw-menu-top hidden-xs hidden-sm" ng-show="openNavigation">
 		<!--<div class="col-md-3">
 			<ul class="nav nav-pills nav-stacked olw-nav-unpadded">
