@@ -2,35 +2,50 @@
 @import 'mixins.less';
 
 .claim {
-    line-height: floor(3 * @font-size-xs);
-    @media (min-width: @breakpoint-sm) { line-height: floor(3 * @font-size-sm); }
+    @breakpoint-pre-sm: 550px;
+    margin-top: @font-size-xs;
+    
+    .visible-xs {
+        display: block !important;
+        @media (min-width: @breakpoint-pre-sm) { display: none !important; }
+    }
+    
+    .hidden-xs {
+        display: none !important;
+        @media (min-width: @breakpoint-pre-sm) { display: block !important; }
+    }
+    
+    line-height: floor(2 * @font-size-xs);
+    @media (min-width: @breakpoint-pre-sm) { line-height: floor(3 * @font-size-sm); }
     @media (min-width: @breakpoint-md) { line-height: floor(3 * @font-size-md); }
     
     strong {
         font-weight: @font-weight-bold;
+        line-height: 1;
         
         font-size: floor(3 * @font-size-xs);
-        @media (min-width: @breakpoint-sm) { font-size: floor(3 * @font-size-sm); }
+        @media (min-width: @breakpoint-pre-sm) { font-size: floor(3 * @font-size-sm); }
         @media (min-width: @breakpoint-md) { font-size: floor(3 * @font-size-md); }
         
         &.lead {
             font-weight: @font-weight-black;
+            line-height: .7;
             
             font-size: floor(4 * @font-size-xs);
-            @media (min-width: @breakpoint-sm) { font-size: floor(5 * @font-size-sm); }
+            @media (min-width: @breakpoint-pre-sm) { font-size: floor(5 * @font-size-sm); }
             @media (min-width: @breakpoint-md) { font-size: floor(5 * @font-size-md); }
         }
     }
     
     small {
         font-size: floor(1.5 * @font-size-xs);
-        @media (min-width: @breakpoint-sm) { font-size: floor(2 * @font-size-sm); }
+        @media (min-width: @breakpoint-pre-sm) { font-size: floor(2 * @font-size-sm); }
         @media (min-width: @breakpoint-md) { font-size: floor(2 * @font-size-md); }
         
         &.lead {
-            font-size: floor(2 * @font-size-xs);
-            @media (min-width: @breakpoint-sm) { font-size: floor(3 * @font-size-sm); }
-            @media (min-width: @breakpoint-md) { font-size: floor(3 * @font-size-md); }
+            font-size: floor(3 * @font-size-xs);
+            @media (min-width: @breakpoint-pre-sm) { font-size: floor(3.5 * @font-size-sm); }
+            @media (min-width: @breakpoint-md) { font-size: floor(3.8 * @font-size-md); }
         }
     }
     
@@ -48,22 +63,22 @@
     .offset-xs-1 {
         .claim .offset;
         left: floor(2 * @font-size-xs);
-        @media (min-width: @breakpoint-sm) { left: 0; }
+        @media (min-width: @breakpoint-pre-sm) { left: 0; }
     }
 
     .offset-xs-2 {
         .claim .offset;
         left: floor(3 * @font-size-xs);
-        @media (min-width: @breakpoint-sm) { left: 0; }
+        @media (min-width: @breakpoint-pre-sm) { left: 0; }
     }
     
     .offset-sm-1 {
         .claim .offset;
-        @media (min-width: @breakpoint-sm) { left: floor(2 * @font-size-sm); }
+        @media (min-width: @breakpoint-pre-sm) { left: floor(2 * @font-size-sm); }
     }
     
     .offset-sm-2 {
         .claim .offset;
-        @media (min-width: @breakpoint-sm) { left: floor(3 * @font-size-sm); }
+        @media (min-width: @breakpoint-pre-sm) { left: floor(3 * @font-size-sm); }
     }
 }
