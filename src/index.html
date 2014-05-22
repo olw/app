@@ -55,12 +55,16 @@
 		<div class="container">
 			<div class="col-xs-2 col-sm-4 col-md-5 col-md-push-6 col-lg-push-7 olw-navbar-header-container">
 				<div class="navbar-header">
+                    <!-- toggle mobile -->
 					<button type="button" class="navbar-toggle visible-xs" ng-click="openNavigation = !openNavigation">
 						<i class="fa fa-bars fa-fw fa-2x"></i>
 					</button>
+                    <!-- toggle tablet -->
 					<button type="button" class="navbar-toggle visible-sm" ng-click="openNavigation = !openNavigation">
-						<span class="fa-stack fa-1x"><i class="fa fa-bars fa-fw fa-2x fa-stack-1x"></i></span> <span style="padding:0 .5em 0 1em">{{'BUTTON_TOGGLE_NAVIGATION' | translate}}</span>
+						<span class="fa-stack fa-1x"><i class="fa fa-bars fa-fw fa-2x fa-stack-1x"></i></span>
+                        <span class="navbar-toggle-content">{{'BUTTON_TOGGLE_NAVIGATION' | translate}}</span>
 					</button>
+                    <!-- toggle desktop -->
 					<button type="button" class="navbar-toggle hidden-xs hidden-sm" ng-click="openNavigation = !openNavigation">
 						<small>{{'BUTTON_TOGGLE_NAVIGATION' | translate}}</small>
 						<br>
@@ -107,28 +111,22 @@
 	</div>
     <!-- mobile menu -->
 	<div class="olw-menu-left hidden-lg hidden-md" ng-show="openNavigation">
-		<!--<ul class="nav nav-pills nav-stacked">
-			<li class="olw-nav-pill-bar-inverse"><a href="#!/sync"><i class="fa fa-qrcode fa-2x"></i> {{ 'BUTTON_SYNCHRONIZE' | translate }}</a></li>
-		</ul>-->
-		<ul ng-repeat="slug in orderedSections" class="nav nav-pills nav-stacked">
-			<li ng-class="['olw-nav-pill-bar-' + slug]"><a ng-href="#!/section/{{sections[slug].url}}" ng-class="'text-' + slug" translate>SECTION_{{slug}}</a></li>
+		<ul ng-repeat="slug in orderedSections" class="nav olw-nav">
+			<li ng-class="['olw-nav-pill-bar-' + slug]"><a ng-href="#!/section/{{sections[slug].url}}"><strong ng-class="'text-' + slug" translate>SECTION_{{slug}}</strong></a></li>
 			<li ng-repeat="area in sections[slug].content" ng-class="'olw-nav-pill-bar-' + slug"><a ng-href="#!/area/{{area.url}}" translate>AREA_{{area.id}}</a></li>
 		</ul>
 	</div>
     <!-- desktop menu -->
-	<div class="container olw-menu-top hidden-xs hidden-sm" ng-show="openNavigation">
-		<!--<div class="col-md-3">
-			<ul class="nav nav-pills nav-stacked olw-nav-unpadded">
-				<li><h4><a href="#!/sync"><i class="fa fa-qrcode fa-2x"></i> {{ 'BUTTON_SYNCHRONIZE' | translate }}</a></h4></li>
-			</ul>
-		</div>-->
-		<div class="col-md-4" ng-repeat="slug in orderedSections">
-			<ul class="nav nav-pills nav-stacked olw-nav-unpadded">
-				<li><h4><a ng-href="#!/section/{{sections[slug].url}}" ng-class="['text-' + slug, 'text-' + slug + '-hover']" translate>SECTION_{{slug}}</a></h4></li>
-				<li ng-repeat="area in sections[slug].content"><a ng-href="#!/area/{{area.url}}" translate>AREA_{{area.id}}</a></li>
-			</ul>
-		</div>
-	</div>
+    <div class="olw-menu-top-container">
+        <div class="container olw-menu-top hidden-xs hidden-sm" ng-show="openNavigation">
+            <div class="col-md-4" ng-repeat="slug in orderedSections">
+                <ul class="nav nav-pills nav-stacked olw-nav-unpadded">
+                    <li><h4><a ng-href="#!/section/{{sections[slug].url}}" ng-class="['text-' + slug, 'text-' + slug + '-hover']" translate>SECTION_{{slug}}</a></h4></li>
+                    <li ng-repeat="area in sections[slug].content"><a ng-href="#!/area/{{area.url}}" translate>AREA_{{area.id}}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 <!-- 	<div class="olw-view-animate-container" ng-class="'olw-animation-' + animation"> -->
 		<div ng-view class="olw-animation"></div>
 <!-- 	</div> -->

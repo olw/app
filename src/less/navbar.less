@@ -35,9 +35,17 @@
 		margin-top: 0;
 		margin-right: 0;
 		margin-bottom: 0;
+        .border-radius(0);
+        .transition(background-color @transition-fast);
 
 		@media screen and (min-width: @breakpoint-sm) and (max-width: @breakpoint-md) {
 			border: 1px solid @color-medium-grey;
+            .border-radius(2px);
+            
+            .navbar-toggle-content {
+                padding: 0 .5em 0 1em;
+                vertical-align: middle;
+            }
 		}
 
 		@media screen and (min-width: @breakpoint-sm) {
@@ -70,20 +78,6 @@
             background-color: inherit;
         }
 
-		&:active,
-        &.active {
-			text-decoration: inherit;
-			@media screen and (max-width: @breakpoint-md) {
-				border-color: @color-white;
-				color: @color-white;
-				background-color: @color-medium-grey;
-			}
-			@media screen and (min-width: @breakpoint-md) {
-				color: @color-medium-grey;
-				background-color: inherit;
-			}
-		}
-
 		a,
 		a:hover,
 		a:focus,
@@ -92,6 +86,19 @@
 			text-decoration: inherit;
 		}
 	}
+}
+
+.navbar-default .navbar-toggle:active,
+.navbar-default .navbar-toggle.active,
+.olw-in .navbar-default .navbar-toggle {
+    @background-color: @color-light-grey;
+    text-decoration: inherit;
+    background-color: @background-color;
+
+    @media screen and (min-width: @breakpoint-md) {
+        color: @background-color;
+        background-color: inherit;
+    }
 }
 
 .navbar-header {

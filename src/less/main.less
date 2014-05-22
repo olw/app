@@ -106,13 +106,18 @@ li.previous > a > i {
 	padding-bottom: 1em;
 }
 
+.olw-menu-top-container {
+    .box-shadow(inset 0 -2px 2px fade(@color-black, 10%));
+    background-color: @color-light-grey;
+}
+
 .olw-menu-left {
 	position: absolute;
 	top: 0;
 
 	display: block;
 	min-height: 100%;
-    .box-shadow(2px -2px 2px fade(@color-black, 30%));
+    .box-shadow(2px -2px 2px fade(@color-black, 10%));
 
 	@media screen and (max-width: @breakpoint-sm) {
 		left: -78%; // fallback
