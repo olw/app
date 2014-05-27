@@ -15,4 +15,28 @@
             }
         }
     }
+    
+    &.pager-gw li {
+        .semantic-pager(@color-gw);
+    }
+    
+    &.pager-iw li {
+        .semantic-pager(@color-iw);
+    }
+    
+    &.pager-nw li {
+        .semantic-pager(@color-nw);
+    }
+}
+
+.semantic-pager(@color) {
+    span {
+        color: @color;
+        
+        &:hover,
+        &:focus,
+        &:active {
+            color: lighten(@color, 10%);
+        }
+    }
 }

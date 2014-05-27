@@ -1,10 +1,10 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-		<ul class="pager">
+		<ul class="pager" ng-class="'pager-' + slug">
 			<li class="previous"><a ng-href="#!/area/{{area.url}}">
 				<i class="fa fa-chevron-left"></i>
-				<span ng-class="'text-' + slug">{{area.translation}}</span>
+				<span>{{area.translation}}</span>
 			</a></li>
 		</ul>
 		</div>
