@@ -1,25 +1,43 @@
-angular.module('olwSection', ['olwConfigurationService', 'olwSectionsService', 'olwUsernameFilter', 'olwLiDirective', 'olwLiBodyDirective', 'ngRoute', 'pascalprecht.translate', 'ng', 'seo'])
+angular.module('olwSection', [
+    'olwConfigurationService'
+  , 'olwSectionsService'
+  , 'olwUsernameFilter'
+  , 'olwLiDirective'
+  , 'olwLiBodyDirective'
+  , 'olwMetaService'
+  , 'pascalprecht.translate'
+  , 'seo'
+  , 'ngRoute'
+  , 'ng'
+])
 
-.config(['$routeProvider', function($routeProvider) {
+.config(function($routeProvider) {
 	$routeProvider.when('/section/:nameWithSlug', {
 		controller: 'SectionCtrl',
 		templateUrl: 'section/section.tpl.html'
 	});
-}])
+})
 
-.controller('SectionCtrl', ['$scope', '$http', '$routeParams', '$timeout', '$filter', 'conf', 'sections', function($scope, $http, $routeParams, $timeout, $filter, conf, sections) {
+.controller('SectionCtrl', function($scope, $http, $routeParams, $timeout, $filter, $translate, conf, sections, meta) {
 	$scope.$parent.slug = $scope.slug = $routeParams.nameWithSlug.substring($routeParams.nameWithSlug.lastIndexOf('-') + 1);
-	$scope.$parent.title = $scope.title = $filter('translate')('SECTION_' + $scope.slug);
+	$translate('SECTION_' + $scope.slug).then(function(title) {
+        $scope.title = title;
+        meta.title($scope.title);
+    });
+    meta.description(false);
 	
 	$scope.filter = { language : { german : { id : 1, enabled : true}, english : {id : 2, enabled : true} } };
 	$scope.isEnabled = function(filter, prop) { return $scope.filter[filter][prop].enabled; };
 	$scope.toggleFilter = function(filter, prop) {
-		var eachDisabled = true;
+		var p1
+          , p2
+          , eachDisabled = true;
+        
 		$scope.filter[filter][prop].enabled = !$scope.filter[filter][prop].enabled;
 		
-		if(!$scope.filter[filter][prop].enabled) {
-			for(var p1 in $scope.filter[filter]) {
-				if($scope.filter[filter][p1].enabled) {
+		if (!$scope.filter[filter][prop].enabled) {
+			for(p1 in $scope.filter[filter]) {
+				if($scope.filter[filter].hasOwnProperty(p1) && $scope.filter[filter][p1].enabled) {
 					eachDisabled = false;
 					break;
 				}
@@ -28,9 +46,9 @@ angular.module('olwSection', ['olwConfigurationService', 'olwSectionsService', '
 			eachDisabled = false;
 		}
 		
-		if(eachDisabled) {
-			for(var p2 in $scope.filter[filter]) {
-				if(prop !== p2) {
+		if (eachDisabled) {
+			for (p2 in $scope.filter[filter]) {
+				if ($scope.filter[filter].hasOwnProperty(p2) && prop !== p2) {
 					$scope.filter[filter][p2].enabled = true;
 				}
 			}
@@ -49,15 +67,16 @@ angular.module('olwSection', ['olwConfigurationService', 'olwSectionsService', '
 	$scope.getSlugFor = sections.getSlugForArea;
 	
 	// Randomgenerator used for random Highlights - returns random integer value of intervall [0,x]
-	var rh = function(x) { return Math.round(Math.random() * x);};
-	
-	// Prepare area ids for query - ?area=1&area=2
-	var filterByArea = sections.sections[$scope.slug].content.map(function(a) { return "area=" + a.id; } ).join('&');
-	var filterByLanguage = function() {
-		var filterByLanguage = [];
-		for(var l in $scope.filter.language) {
-			if($scope.filter.language[l].enabled) {
-				filterByLanguage.push('language='+$scope.filter.language[l].id);
+	var rh = function(x) { return Math.round(Math.random() * x);}
+	    // Prepare area ids for query - ?area=1&area=2
+	  , filterByArea = sections.sections[$scope.slug].content.map(function(a) { return "area=" + a.id; } ).join('&')
+	  , filterByLanguage = function() {
+		var lang
+          , filterByLanguage = [];
+          
+		for (lang in $scope.filter.language) {
+			if ($scope.filter.language.hasOwnProperty(lang) && $scope.filter.language[lang].enabled) {
+				filterByLanguage.push('language='+$scope.filter.language[lang].id);
 			}
 		}
 		filterByLanguage = filterByLanguage.join('&');
@@ -67,10 +86,12 @@ angular.module('olwSection', ['olwConfigurationService', 'olwSectionsService', '
 
 	$scope.badges = function(collection) {
 		return collection.areas.map(function(area) {
-			return {
-				title: $filter('translate')('AREA_' + area.id),
-				classes: 'badge-' + sections.getSlugForArea(area.name)
-			};
+            return $translate('AREA_' + area.id).then(function(title) {
+                return {
+                    title: title,
+                    classes: 'badge-' + sections.getSlugForArea(area.name)
+                };
+            });
 		});
 	};
 	
@@ -81,6 +102,10 @@ angular.module('olwSection', ['olwConfigurationService', 'olwSectionsService', '
 		$http
 			.jsonp(conf.urls.api + '/collection-overview/filter/' + conf.urls.apiIndexPathElement +'?&elements=' + amount + '&' + filterByLanguage() + '&page=' + ($scope.page++) + '&' + filterByArea + '&callback=JSON_CALLBACK')
 			.success(function(result) {
+                var pot
+                  , i
+                  , r;
+                
 				$scope.totalElements = result.totalElements;
 				$scope.moreAvailable = result.totalElements > amount * $scope.page;
 				
@@ -96,10 +121,10 @@ angular.module('olwSection', ['olwConfigurationService', 'olwSectionsService', '
 				
 				if(update) {
 					// make copy of $scope.collections
-					var pot = $scope.collections.slice();
+					pot = $scope.collections.slice();
 					// Take/draw randomly 3 collections as highlights 
-					for(var i = 0; i < Math.min(3, pot.length); i++) {
-						var r = rh(pot.length - 1);
+					for(i = 0; i < Math.min(3, pot.length); i++) {
+						r = rh(pot.length - 1);
 						$scope.highlights.push(pot[r]);
 						pot.splice(r, 1);
 					}
@@ -115,6 +140,6 @@ angular.module('olwSection', ['olwConfigurationService', 'olwSectionsService', '
 			$scope.$parent.animation = 'none';
 		}
 	});
-}]);
+});
 
 

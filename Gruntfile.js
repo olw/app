@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = function (grunt) {
   
   /** 
@@ -71,6 +73,16 @@ module.exports = function (grunt) {
           }
       ]   
       },
+      build_vendor_assets: {
+        files: [
+          { 
+            src: [ '<%= vendor_files.assets %>' ],
+            dest: '<%= build_dir %>',
+            cwd: '.',
+            expand: true
+          }
+       ]   
+      },
       build_appjs: {
         files: [
           {
@@ -114,7 +126,7 @@ module.exports = function (grunt) {
       compile_vendor: {
         files: [
           {
-            src: ['**/*.css'],
+            src: ['**/*'],
             dest: '<%= compile_dir %>/vendor',
             cwd: '<%= build_dir %>/vendor',
             expand: true
@@ -438,7 +450,7 @@ module.exports = function (grunt) {
   /**
    * The `build` task gets your app ready to run for development and testing.
    */
-  grunt.registerTask('build', ['clean', 'html2js', 'less:build', 'copy:build_assets', 'copy:build_appjs', 'copy:build_vendorjs', 'copy:build_vendorcss', 'index:build']);
+  grunt.registerTask('build', ['clean', 'html2js', 'less:build', 'copy:build_assets', 'copy:build_vendor_assets', 'copy:build_appjs', 'copy:build_vendorjs', 'copy:build_vendorcss', 'index:build']);
   
   grunt.registerTask('validate', ['build', 'jshint']);
   

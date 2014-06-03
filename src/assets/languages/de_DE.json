@@ -1,8 +1,8 @@
 {
 	"PAGE_TITLE": "OpenLearnWare",
 	"PAGE_DESCRIPTION": "Die Plattform f&uuml;r offene Lernmaterialien an der TU Darmstadt.",
-	"PAGE_TEASER": "Freie Vorlesungen der TU Darmstadt",
-	"PAGE_SERVED_BY": "bereitgestellt durch",
+	"PAGE_TEASER": "<p class='visible-xs'><strong class='dark lead'>Entdecke</strong> <small class='dark lead'>&</small><br><strong class='dark lead'>erlebe</strong><br><small>die offenen</small><br><strong>Vorlesungen</strong><br><span class='offset-xs-2'><small>und</small> <strong>Vorträge</strong></span><br><small class='offset-xs-1'>der TU Darmstadt</small></p><p class='hidden-xs'><strong class='dark lead'>Entdecke</strong> <small class='dark lead'>&</small> <strong class='dark lead'>erlebe</strong><br><span class='offset-sm-2'><small>die offenen</small> <strong>Vorlesungen</strong> <small>und</small></span><br><span class='offset-sm-1'><strong>Vorträge</strong> <small>der TU Darmstadt</small></span></p>",
+	"PAGE_SERVED_BY": "Dieses Angebot wird bereitgestellt durch",
 	"PAGE_IMPRINT": "Impressum",
 	"PAGE_PRIVACY": "Datenschutz",
 	"PAGE_SERVER": "Technische Universität Darmstadt",
@@ -14,7 +14,7 @@
 	"LINK_BLOG": "Blog",
 	"LINK_CONTACT": "Kontakt",
 	"LINK_PRESS": "Presse",
-	"LINK_CODE": "Open Source Code",
+	"LINK_CODE": "GitHub",
 	"LINK_API": "API",
 
 	"HEADLINE_HIGHLIGHTS": "Highlights",
@@ -74,7 +74,7 @@
 	"SECTION_nw": "Naturwissenschaften",
 	"SECTION_gw": "Geisteswissenschaften",
 	
-	"ABOUT_HEADER_1": "<olw-brand></olw-brand> ist eine Online-Plattform<br class=\"visible-lg\">der TU Darmstadt, die den <em style=\"font-weight:600\">freien Zugang<br class=\"visible-lg\">und Austausch</em> von Lernmaterialien<br class=\"visible-lg\">für alle Interessierten ermöglicht",
+	"ABOUT_HEADER_1": "<olw-brand></olw-brand> ist eine Online-Plattform<br class=\"visible-lg\"> der TU Darmstadt, die den <em style=\"font-weight:600\">freien Zugang<br class=\"visible-lg\"> und Austausch</em> von Lernmaterialien<br class=\"visible-lg\">für alle Interessierten ermöglicht",
 	"ABOUT_HEADER_2": "Über <olw-brand></olw-brand>",
 	"ABOUT_OER": "<olw-brand></olw-brand> ist Teil der weltweiten Bildungsinitiative Open Educational Resources (OER). Offenheit in der Lehre und Bildung für alle sind die primären Ziele der Initiative. Dieses Konzept beinhaltet die freie Verfügbarkeit von Bildungs-Ressourcen im Web, sowie das primäre Ziel der Offenheit bei der Gestaltung von Bildungs-Prozessen.",
 	"ABOUT_ACCESS": "Alle Materialien auf dieser Seite werden unter Open Access Bedingungen publiziert. Deshalb kann jeder Nutzer Dokumente lesen, herunterladen, speichern, verlinken oder drucken. Alle können die Inhalte kostenfrei Nutzen!",

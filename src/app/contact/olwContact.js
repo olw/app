@@ -1,15 +1,18 @@
-angular.module('olwContact', ['ng', 'seo'])
+angular.module('olwContact', [
+    'ng'
+  , 'seo'
+])
 
-.config(['$routeProvider', function($routeProvider) {
+.config(function($routeProvider) {
 	$routeProvider.when('/contact', {
 		controller: 'ContactCtrl',
 		templateUrl: 'contact/contact.tpl.html'
 	});
-}])
+})
 
-.controller('ContactCtrl', ['$scope', function($scope) {
+.controller('ContactCtrl', function($scope) {
 	$scope.hello = 'Hello World!';
 	$scope.$parent.slug = 'gw';
 
 	$scope.htmlReady();
-}]);
+});

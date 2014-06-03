@@ -1,7 +1,10 @@
+@import 'variables.less';
+@import 'mixins.less';
+
 .navbar {
 	margin-bottom: 0;
 	min-height: 0;
-	.box-shadow(0 1px 2px fade(@color-black, 10%));
+	.box-shadow(2px 2px 2px fade(@color-black, 10%));
 
 	.fa { color: @color-dark-grey; }
 
@@ -17,6 +20,12 @@
 	}
 }
 
+.olw-navbar-header-container {
+    @media (max-width: @breakpoint-sm) {
+        line-height: .1;
+    }
+}
+
 .navbar-default {
 	background-color: @color-white;
 
@@ -26,9 +35,23 @@
 		margin-top: 0;
 		margin-right: 0;
 		margin-bottom: 0;
+        .border-radius(0);
+        .transition(background-color @transition-fast);
+		
+		@media screen and (min-width: @breakpoint-lg) {
+			&.olw-condensed-toggle {
+				padding-right: 0;
+			}
+		}
 
 		@media screen and (min-width: @breakpoint-sm) and (max-width: @breakpoint-md) {
 			border: 1px solid @color-medium-grey;
+            .border-radius(2px);
+            
+            .navbar-toggle-content {
+                padding: 0 .5em 0 1em;
+                vertical-align: middle;
+            }
 		}
 
 		@media screen and (min-width: @breakpoint-sm) {
@@ -52,20 +75,14 @@
 				line-height: .8;
 			}
 		}
-
-		&:hover,
-		&:focus {
-			text-decoration: inherit;
-			@media screen and (max-width: @breakpoint-md) {
-				border-color: @color-white;
-				color: @color-white;
-				background-color: @color-gw;
-			}
-			@media screen and (min-width: @breakpoint-md) {
-				color: @color-medium-grey;
-				background-color: inherit;
-			}
-		}
+        
+        &:hover,
+        &:focus {
+            text-decoration: inherit;
+            color: inherit;
+            border-color: inherit;
+            background-color: inherit;
+        }
 
 		a,
 		a:hover,
@@ -75,6 +92,19 @@
 			text-decoration: inherit;
 		}
 	}
+}
+
+.navbar-default .navbar-toggle:active,
+.navbar-default .navbar-toggle.active,
+.olw-in .navbar-default .navbar-toggle {
+    @background-color: @color-light-grey;
+    text-decoration: inherit;
+    background-color: @background-color;
+
+    @media screen and (min-width: @breakpoint-md) {
+        color: @background-color;
+        background-color: inherit;
+    }
 }
 
 .navbar-header {
@@ -136,7 +166,7 @@
 	min-width: 8em;
 	margin: 0 15px;
 	padding-left: 0;
-	height: 46px;
+	height: 42px;
 	background-position:center;
 	
 	@media screen and (max-width: @breakpoint-sm) { 
@@ -145,7 +175,7 @@
 	@media screen and (min-width: @breakpoint-sm) {
 		background-image: url(img/logo/olw.svg);
 		min-width: 10em;
-		margin: 8px 15px;
+		margin: 8px 15px 8px 0;
 	}
 
 	// beta notice

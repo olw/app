@@ -1,6 +1,10 @@
 <style scoped>
+.olw-tu-logo-container {
+    color: #fff;
+}
 .olw-img-brand {
 	width: 150px;
+    margin-left: 12px;
 }
 @media screen and (min-width: 768px) {
 	.olw-img-brand {
@@ -15,10 +19,11 @@
 </style>
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-md-12 olw-tu-logo-container">
+		<div class="col-md-12 olw-tu-logo-container text-right">
 			<a ng-href="{{url}}" target="_blank" class="pull-right">
 				<img ng-src="{{logo}}" class="img-responsive olw-img-brand" alt="{{alt}}">
 			</a>
+            <span class="hidden-xs">{{text}}</span>
 		</div>
 	</div>
 </div>

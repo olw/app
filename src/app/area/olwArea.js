@@ -1,19 +1,31 @@
-angular.module('olwArea', ['olwConfigurationService', 'olwSectionsService', 'olwUsernameFilter', 'ngRoute', 'ng', 'seo'])
+angular.module('olwArea', [
+    'olwConfigurationService'
+  , 'olwSectionsService'
+  , 'olwUsernameFilter'
+  , 'pascalprecht.translate'
+  , 'ngRoute'
+  , 'ng'
+  , 'seo'
+])
 
-.config(['$routeProvider', function($routeProvider) {
+.config(function($routeProvider) {
 	$routeProvider.when('/area/:nameWithId', {
 		controller: 'AreaCtrl',
 		templateUrl: 'area/area.tpl.html'
 	});
-}])
+})
 
-.controller('AreaCtrl', ['$scope', '$http', '$routeParams', '$timeout', '$filter', 'conf', 'sections', function($scope, $http, $routeParams, $timeout, $filter, conf, sections) {
+.controller('AreaCtrl', function($scope, $http, $routeParams, $timeout, $filter, $translate, conf, sections, meta) {
 	$scope.id = $routeParams.nameWithId.substring($routeParams.nameWithId.lastIndexOf('-') + 1);
 	
 	$http
 		.jsonp(conf.urls.api + '/area/' + $scope.id + '?callback=JSON_CALLBACK')
 		.success(function(result) {
-			$scope.$parent.title = $scope.title = $filter('translate')('AREA_' + result.id);
+            $translate('AREA_' + result.id).then(function(title) {
+                $scope.title = title;
+                meta.title($scope.title);
+            });
+            meta.description(false);
 			$scope.$parent.slug = $scope.slug = sections.getSlugForArea(result.code || result.name);
 		});
 	
@@ -90,10 +102,12 @@ angular.module('olwArea', ['olwConfigurationService', 'olwSectionsService', 'olw
 
 	$scope.badges = function(collection) {
 		return collection.areas.map(function(area) {
-			return {
-				title: $filter('translate')('AREA_' + area.id),
-				classes: 'badge-' + sections.getSlugForArea(area.name)
-			};
+            return $translate('AREA_' + area.id).then(function(title) {
+                return {
+                    title: title,
+                    classes: 'badge-' + sections.getSlugForArea(area.name)
+                };
+            });
 		});
 	};
 	
@@ -104,4 +118,4 @@ angular.module('olwArea', ['olwConfigurationService', 'olwSectionsService', 'olw
 			$scope.$parent.animation = 'none';
 		}
 	});
-}]);
+});

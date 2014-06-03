@@ -1,28 +1,46 @@
-angular.module('olw', ['templates-app', 'templates-common', 'olwHome', 'olwArea', 'olwResource', 'olwSearch', 'olwSection', 'olwCollection', 'olwContact', 'olwImprint', 'olwAbout', 'olwConfigurationService', 'olwSectionsService', 'ngRoute', 'ngAnimate', 'hmTouchEvents', 'pascalprecht.translate', 'btford.markdown', 'ng', 'seo'])
+angular.module('olw', [
+    'templates-app'
+  , 'templates-common'
+  , 'olwHome'
+  , 'olwArea'
+  , 'olwResource'
+  , 'olwSearch'
+  , 'olwSection'
+  , 'olwCollection'
+  , 'olwContact'
+  , 'olwImprint'
+  , 'olwAbout'
+  , 'olwConfigurationService'
+  , 'olwSectionsService'
+  , 'olwMetaService'
+  , 'olwImgBrandDirective'
+  , 'ngRoute'
+  , 'ngAnimate'
+  , 'hmTouchEvents'
+  , 'pascalprecht.translate'
+  , 'ng'
+  , 'seo'
+])
 
-.config(['$routeProvider', '$locationProvider', '$sceProvider', '$translateProvider', function($routeProvider, $locationProvider, $sceProvider, $translateProvider) {
-	$locationProvider
-		.html5Mode(false)
-		.hashPrefix('!');
-	$sceProvider
-		.enabled(false);
-	$translateProvider
-		.preferredLanguage((navigator.language.indexOf('de') === 0) ? 'de_DE' : 'en_US');
-	$translateProvider
-		.useStaticFilesLoader({
-			prefix: 'assets/languages/',
-			suffix: '.json'
-		});
-	$routeProvider
-		.otherwise({
-			redirectTo: '/'
-		});
-}])
+.config(function($routeProvider, $locationProvider, $sceProvider, $translateProvider) {
+	$locationProvider.html5Mode(false);
+    $locationProvider.hashPrefix('!');
+	$sceProvider.enabled(false);
+	$translateProvider.preferredLanguage((navigator.language.indexOf('de') === 0) ? 'de_DE' : 'en_US');
+	$translateProvider.useStaticFilesLoader({
+        prefix: 'assets/languages/',
+        suffix: '.json'
+    });
+	$routeProvider.otherwise({
+        redirectTo: '/'
+    });
+})
 
-.controller('AppCtrl', ['$scope', '$translate', '$http', '$routeParams', '$route', '$location', '$timeout', 'conf', 'sections', function($scope, $translate, $http, $routeParams, $route, $location, $timeout, conf, sections) {
+.controller('AppCtrl', function($scope, $translate, $http, $routeParams, $route, $location, $timeout, conf, sections, meta) {
 	$scope.titleSuffix = ' | ' + conf.app.title;
 	$scope.animation = 'none';
 
+    $scope.meta = meta;
 	$scope.$location = $location;
 	$scope.$routeParams = $routeParams;
 	$scope.$route = $route;
@@ -32,9 +50,9 @@ angular.module('olw', ['templates-app', 'templates-common', 'olwHome', 'olwArea'
 	$scope.sections = {};
 
 	$scope.executeQuery = function() {
-		$location
-			.path('/search')
-			.search({query: $scope.query});
+		$location.path('/search').search({
+            query: $scope.query
+        });
 	};
 
 	$scope.switchLanguage = function(locale) {
@@ -42,29 +60,27 @@ angular.module('olw', ['templates-app', 'templates-common', 'olwHome', 'olwArea'
 		$translate.uses(locale);
 	};
 
-	$http
-		.jsonp(conf.urls.api + '/filter-overview/area?callback=JSON_CALLBACK')
-		.success(function(result) {
-			var i, area, element, sectionSlug;
-			for (i = 0; i < result.elements.length; i++) {
-				area = result.elements[i];
-				element = {
-					id: area.id,
-					url: sections.getPathElement(area.name, area.id)
-				};
-				for (sectionSlug in sections.sections) {
-					if (sections.sections.hasOwnProperty(sectionSlug)) {
-						if (sections.isAreaInSection(sectionSlug, area.name)) {
-							if ($scope.sections[sectionSlug] === undefined) {
-								$scope.sections[sectionSlug] = {title: sections.sections[sectionSlug].title, content: [element], url: sectionSlug};
-							} else {
-								$scope.sections[sectionSlug].content.push(element);
-							}
-						}
-					}
-				}
-			}
-			$scope.htmlReady();
+	$http.jsonp(conf.urls.api + '/filter-overview/area?callback=JSON_CALLBACK').success(function(result) {
+        var i, area, element, sectionSlug;
+        for (i = 0; i < result.elements.length; i++) {
+            area = result.elements[i];
+            element = {
+                id: area.id,
+                url: sections.getPathElement(area.name, area.id)
+            };
+            for (sectionSlug in sections.sections) {
+                if (sections.sections.hasOwnProperty(sectionSlug)) {
+                    if (sections.isAreaInSection(sectionSlug, area.name)) {
+                        if ($scope.sections[sectionSlug] === undefined) {
+                            $scope.sections[sectionSlug] = {title: sections.sections[sectionSlug].title, content: [element], url: sectionSlug};
+                        } else {
+                            $scope.sections[sectionSlug].content.push(element);
+                        }
+                    }
+                }
+            }
+        }
+        $scope.htmlReady();
 	});
 
 	$scope.consume = function(event) {
@@ -76,4 +92,4 @@ angular.module('olw', ['templates-app', 'templates-common', 'olwHome', 'olwArea'
 		$scope.openNavigation = false;
 		window.scrollTo(0,0);
 	});
-}]);
+});

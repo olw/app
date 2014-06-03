@@ -4,9 +4,10 @@ angular.module('olwConfigurationService', ['ng'])
     return {
         app: {
             title: 'OpenLearnWare',
+            twitter: '@openlearnware',
             host: {
                 title: 'Technische Universität Darmstadt',
-                img: 'assets/img/logo/tu.svg'
+                logo: 'assets/img/proprietary/logo/tu.svg'
             }
         },
         urls: {

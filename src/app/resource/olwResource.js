@@ -1,43 +1,42 @@
-angular.module('olwResource', ['olwConfigurationService', 'olwSectionsService', 'olwCdnService', 'olwUsernameFilter', 'ngRoute', 'ngAnimate', 'hmTouchEvents', 'ng', 'seo'])
+angular.module('olwResource', [
+    'olwMetaService'
+  , 'olwConfigurationService'
+  , 'olwSectionsService'
+  , 'olwCdnService'
+  , 'olwUsernameFilter'
+  , 'olwAttrDirective'
+  , 'ngRoute'
+  , 'ngAnimate'
+  , 'hmTouchEvents'
+  , 'ng'
+  , 'seo'
+])
 
-.config(['$routeProvider', function($routeProvider) {
+.config(function($routeProvider) {
 	$routeProvider.when('/resource/:nameWithId', {
 		controller: 'ResourceCtrl',
 		templateUrl: 'resource/resource.tpl.html'
 	});
-}])	
+})	
 
-.directive('olwAttr', [function() {
-	return function(scope, element, attrs) {
-		attrs.$observe('olwAttr', function(at) {
-			var attr = scope.$eval(at);
-			for (var key in attr) {
-				if (attr.hasOwnProperty(key) && attr[key]) {
-					element.attr(key, key);
-				}
-			}
-		});
-	};
-}])
-
-.controller('ResourceCtrl', ['$scope', '$http', '$routeParams', '$timeout', '$filter', 'conf', 'sections', 'cdn', function($scope, $http, $routeParams, $timeout, $filter, conf, sections, cdn) {
+.controller('ResourceCtrl', function($scope, $http, $routeParams, $timeout, $filter, conf, sections, cdn, meta) {
 	var id = $routeParams.nameWithId.substring($routeParams.nameWithId.lastIndexOf('-') + 1)
 	  , start = 1;
 
 	if (localStorage.getItem(id)) {
-		start = JSON.parse(localStorage.getItem(id)).current;
+		start = angular.fromJson(localStorage.getItem(id)).current;
 	}
 
-	$scope.$parent.title = 'Material';
+	meta.title('Material');
 	$scope.media = [];
 
 	$http
 		.jsonp(conf.urls.api + '/resource-detailview/' + conf.urls.apiIndexPathElement + id + '?callback=JSON_CALLBACK')
 		.success(function(result) {
 			var slug;
-			$scope.$parent.title = $scope.title = result.name;
+			$scope.title = result.name;
+            meta.title($scope.title);
 
-			// populate template with (merely) static data
 			$scope.sources = {};
 			$scope.users = result.users.map($filter('username'));
 			$scope.date = parseInt(result.creationDate, 10);
@@ -45,13 +44,17 @@ angular.module('olwResource', ['olwConfigurationService', 'olwSectionsService', 
 			$scope.type = result.characteristicType;
 			$scope.related = result.externalResources;
 			$scope.description = result.description;
+            meta.description($scope.description);
 			if (result.areas) {
 				$scope.areas = result.areas.map(function(area) { return { title: area.code, url: sections.getPathElement(area.code, area.id) }; });
 				$scope.$parent.slug = $scope.slug = sections.getSlugForArea($scope.areas[0].title);
 			}
 			if (result.semesters) {
 				$scope.terms = result.semesters.map(function(term) {
-					return { year : term.year, part : 'SEMESTER_PART_' + term.part }; 
+					return { 
+                        year: term.year,
+                        part: 'SEMESTER_PART_' + term.part
+                    }; 
 				});
 			}
 			
@@ -63,7 +66,7 @@ angular.module('olwResource', ['olwConfigurationService', 'olwSectionsService', 
 				}
 				if ($scope.canvasShow === 'pdf' || result.childs.length > 0) {
 					$scope.canvasShow = 'pdf';
-					$('#pdf').PDFDoc({
+					jQuery('#pdf').PDFDoc({
 						source: $scope.sources.pdf[0],
 						page: start
 					});
@@ -145,6 +148,7 @@ angular.module('olwResource', ['olwConfigurationService', 'olwSectionsService', 
 				});	
 			
 			if (result.collections) {
+                console.log(result.collections);
 				$scope.collections = result.collections.map(function(collection) { return { title: collection.name, url: sections.getPathElement(collection.name, collection.id) }; });
 
 				$http.jsonp(conf.urls.api + '/collection-detailview/' + result.collections[0].id + '?callback=JSON_CALLBACK')
@@ -236,4 +240,4 @@ angular.module('olwResource', ['olwConfigurationService', 'olwSectionsService', 
 			$scope.showPulldownMenu = false;
 		}
 	};
-}]);
+});

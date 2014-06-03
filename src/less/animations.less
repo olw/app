@@ -1,9 +1,8 @@
-@transition-timing: ease;
-@transition-duration: .2s;
+@transition-duration: @transition-slow;
 
 .olw-menu-container {
 	@media screen and (max-width: @breakpoint-md) {
-		.transition(left @transition-duration @transition-timing);
+		.transition(all @transition-duration @transition-timing);
 	}
 }
 

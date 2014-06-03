@@ -9,9 +9,10 @@ angular.module('olwImgBrandDirective', ['olwConfigurationService', 'ng'])
 		},
 		restrict: 'A',
 		scope: {
-			alt: '@?',
-			logo: '@?',
-			url: '@?'
+			alt: '@',
+			logo: '@',
+			url: '@',
+            text: '@'
 		},
 		templateUrl: 'olwImgBrandDirective/olw-img-brand.tpl.html'
 	};

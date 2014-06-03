@@ -1,12 +1,22 @@
 {
   "name": "olw-app",
-  "version": "0.2.1",
-  "devDependencies": {
-  	"hammerjs": "*",
+  "version": "0.3.0",
+  "dependencies": {
+    "hammerjs": "*",
+    "angular": "*",
+    "angular-route": "*",
+    "angular-animate": "*",
     "angular-translate": "*",
     "angular-translate-loader-url": "*",
     "angular-translate-loader-static-files": "*",
     "angular-seo": "*",
-    "angular-hammer": "*"
+    "angular-hammer": "*",
+    "angular-touch": "~1.2.16",
+    "jquery": "~2.1.1",
+    "bootstrap": "~3.1.1",
+    "font-awesome": "~4.1.0"
+  },
+  "resolutions": {
+    "angular": "1.2.16"
   }
 }

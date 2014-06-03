@@ -1,10 +1,10 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-		<ul class="pager">
+		<ul class="pager" ng-class="'pager-' + slug">
 			<li class="previous"><a ng-href="#!/area/{{area.url}}">
 				<i class="fa fa-chevron-left"></i>
-				<span ng-class="'text-' + slug">{{area.translation}}</span>
+				<span>{{area.translation}}</span>
 			</a></li>
 		</ul>
 		</div>
@@ -13,7 +13,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<header>
-				<div class="olw-subtitle"><span ng-repeat="user in users"><span ng-show="$index > 0">, </span>{{user}}</span></div>
+				<div class="olw-subtitle"><span ng-repeat="user in users track by $index"><span ng-show="$index > 0">, </span>{{user}}</span></div>
 				<h1 class="h2" style="margin-top:0">{{title}}</h1>
 				<p class="p"><span ng-repeat="term in terms"><span ng-show="$index > 0">, </span><span translate>SEMESTER_PART_{{term.part}}</span> {{term.year}}</span></p>
 			</header>
@@ -36,29 +36,5 @@
 				</li>
 			</ul>
 		</div>
-		<!-- Zugehoörige gibt es im Moment noch nicht. Problem mit liste schön anzeigen.
-		<div class="col-md-4 hidden-xs hidden-sm">
-			<h2 class="hidden-xs hidden-sm" ng-class="'text-' + slug">ZUGEH&Ouml;RIG</h2>
-			<ul class="nav nav-pills nav-stacked">
-				 <li ng-repeat="extra material"> 
-				<li>
-					<a ng-href="#!/resource/{{resource.url}}">
-						<i class="fa fa-link fa-4x"></i><span>Wiki Biomechanik des Sportsa defsh sdh sdh h  asg asfg ah sdh sdh sdh sgh sgjh fgj dgj  sdh sd</span>
-					</a>
-				</li>
-				<li>
-					<a ng-href="#!/resource/{{resource.url}}">
-						<i class="fa fa-link fa-4x"></i><span>Wiki Biomechanik</span>
-					</a>
-				</li>
-				<li>
-					<a ng-href="#!/resource/{{resource.url}}">
-						<i class="fa fa-link fa-4x"></i><span>Wiki Biomechanik des Sportsa defsh sdh sdh h  asg asfg ah sdh sdh sdh sgh sgjh fgj dgj  sdh sd</span>
-					</a>
-				</li>
-			</ul>
-			
-		</div>
-		-->
 	</div>
 </div>

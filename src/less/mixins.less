@@ -1,4 +1,4 @@
-.linear-gradient( @from, @to ) {
+.linear-gradient(@from, @to) {
 	background-image: -webkit-linear-gradient(top, @from, @to);
 	background-image:    -moz-linear-gradient(top, @from, @to);
 	background-image:     -ms-linear-gradient(top, @from, @to);
@@ -6,56 +6,56 @@
 	background-image:         linear-gradient(top, @from, @to);
 }
 
-.multilayer-bg(@url-stamp-img; @color-gradient-from; @color-gradient-to; @gradient-opacity; @url-base-img) {
-	background-image: /*url(@url-stamp-img),*/ -webkit-linear-gradient(top, fade(@color-gradient-from, @gradient-opacity), fade(@color-gradient-to, @gradient-opacity)), url(@url-base-img);
-	background-image: /*url(@url-stamp-img),*/    -moz-linear-gradient(top, fade(@color-gradient-from, @gradient-opacity), fade(@color-gradient-to, @gradient-opacity)), url(@url-base-img);
-	background-image: /*url(@url-stamp-img),*/     -ms-linear-gradient(top, fade(@color-gradient-from, @gradient-opacity), fade(@color-gradient-to, @gradient-opacity)), url(@url-base-img);
-	background-image: /*url(@url-stamp-img),*/      -o-linear-gradient(top, fade(@color-gradient-from, @gradient-opacity), fade(@color-gradient-to, @gradient-opacity)), url(@url-base-img);
-	background-image: /*url(@url-stamp-img),*/         linear-gradient(top, fade(@color-gradient-from, @gradient-opacity), fade(@color-gradient-to, @gradient-opacity)), url(@url-base-img);
+.multilayer-bg(@color-gradient-from; @color-gradient-to; @gradient-opacity; @url-base-img) {
 	background-color: mix(@color-gradient-to, @color-gradient-from);
-	background-repeat: /*no-repeat,*/ repeat, no-repeat;
-	background-position: /*top right,*/ center, center;
-	background-size: /*50%,*/ cover, cover;
-	@media screen and (min-width: @breakpoint-sm) {
-		background-size: /*38%,*/ cover, cover;
-	}
-	@media screen and (min-width: @breakpoint-md) {
-		background-size: /*contain,*/ cover, cover;
-	}
-}
-
-.overlay-bg(@color-gradient-from; @color-gradient-to; @gradient-opacity; @url-base-img) {
 	background-image: -webkit-linear-gradient(top, fade(@color-gradient-from, @gradient-opacity), fade(@color-gradient-to, @gradient-opacity)), url(@url-base-img);
 	background-image:    -moz-linear-gradient(top, fade(@color-gradient-from, @gradient-opacity), fade(@color-gradient-to, @gradient-opacity)), url(@url-base-img);
 	background-image:     -ms-linear-gradient(top, fade(@color-gradient-from, @gradient-opacity), fade(@color-gradient-to, @gradient-opacity)), url(@url-base-img);
 	background-image:      -o-linear-gradient(top, fade(@color-gradient-from, @gradient-opacity), fade(@color-gradient-to, @gradient-opacity)), url(@url-base-img);
 	background-image:         linear-gradient(top, fade(@color-gradient-from, @gradient-opacity), fade(@color-gradient-to, @gradient-opacity)), url(@url-base-img);
-	background-color: mix(@color-gradient-to, @color-gradient-from);
 	background-repeat: repeat, no-repeat;
 	background-position: center, center;
+	background-size: cover, cover;
+	@media screen and (min-width: @breakpoint-sm) {
+		background-size: cover, cover;
+	}
+	@media screen and (min-width: @breakpoint-md) {
+		background-size: cover, cover;
+	}
+}
+
+.overlay-bg(@color-gradient-from; @color-gradient-to; @gradient-opacity; @url-base-img) {
+	background-color: mix(@color-gradient-to, @color-gradient-from);
+	background-image: -webkit-linear-gradient(top, fade(@color-gradient-from, @gradient-opacity), fade(@color-gradient-to, @gradient-opacity)), url(@url-base-img);
+	background-image:    -moz-linear-gradient(top, fade(@color-gradient-from, @gradient-opacity), fade(@color-gradient-to, @gradient-opacity)), url(@url-base-img);
+	background-image:     -ms-linear-gradient(top, fade(@color-gradient-from, @gradient-opacity), fade(@color-gradient-to, @gradient-opacity)), url(@url-base-img);
+	background-image:      -o-linear-gradient(top, fade(@color-gradient-from, @gradient-opacity), fade(@color-gradient-to, @gradient-opacity)), url(@url-base-img);
+	background-image:         linear-gradient(top, fade(@color-gradient-from, @gradient-opacity), fade(@color-gradient-to, @gradient-opacity)), url(@url-base-img);
+	background-repeat: repeat, no-repeat;
+	background-position: center, bottom right;
 	background-size: cover, cover;
 }
 
 .grained-bg(@url-grain-img; @color-gradient-from; @color-gradient-to; @gradient-opacity) {
+	background-color: mix(@color-gradient-to, @color-gradient-from);
 	background-image: url(@url-grain-img), -webkit-linear-gradient(top, fade(@color-gradient-from, @gradient-opacity), fade(@color-gradient-to, @gradient-opacity));
 	background-image: url(@url-grain-img),    -moz-linear-gradient(top, fade(@color-gradient-from, @gradient-opacity), fade(@color-gradient-to, @gradient-opacity));
 	background-image: url(@url-grain-img),     -ms-linear-gradient(top, fade(@color-gradient-from, @gradient-opacity), fade(@color-gradient-to, @gradient-opacity));
 	background-image: url(@url-grain-img),      -o-linear-gradient(top, fade(@color-gradient-from, @gradient-opacity), fade(@color-gradient-to, @gradient-opacity));
 	background-image: url(@url-grain-img),         linear-gradient(top, fade(@color-gradient-from, @gradient-opacity), fade(@color-gradient-to, @gradient-opacity));
-	background-color: mix(@color-gradient-to, @color-gradient-from);
 }
 
 .olw-multilayer-bg-gw(@area-id) {
-	.multilayer-bg('img/proprietary/signature/gw.png', @color-gw-gradient-from, @color-gw-gradient-to, 70%, 'img/proprietary/area/@{area-id}.jpg');
+	.multilayer-bg(@color-gw-gradient-from, @color-gw-gradient-to, 70%, 'img/proprietary/area/@{area-id}.jpg');
 }
 .olw-multilayer-bg-iw(@area-id) {
-	.multilayer-bg('img/proprietary/signature/iw.png', @color-iw-gradient-from, @color-iw-gradient-to, 70%, 'img/proprietary/area/@{area-id}.jpg');
+	.multilayer-bg(@color-iw-gradient-from, @color-iw-gradient-to, 70%, 'img/proprietary/area/@{area-id}.jpg');
 }
 .olw-multilayer-bg-nw(@area-id) {
-	.multilayer-bg('img/proprietary/signature/nw.png', @color-nw-gradient-from, @color-nw-gradient-to, 70%, 'img/proprietary/area/@{area-id}.jpg');
+	.multilayer-bg(@color-nw-gradient-from, @color-nw-gradient-to, 70%, 'img/proprietary/area/@{area-id}.jpg');
 }
 
-.box-sizing( @sizing ) {
+.box-sizing(@sizing) {
 	-webkit-box-sizing: @sizing;
 	   -moz-box-sizing: @sizing;
 	    -ms-box-sizing: @sizing;
@@ -63,7 +63,7 @@
 	        box-sizing: @sizing;
 }
 
-.border-radius( @radius ) {
+.border-radius(@radius) {
 	-webkit-border-radius: @radius;
 	   -moz-border-radius: @radius;
 	    -ms-border-radius: @radius;
@@ -71,7 +71,7 @@
 	        border-radius: @radius;
 }
 
-.box-shadow( @shadow ) {
+.box-shadow(@shadow) {
 	-webkit-box-shadow: @shadow;
 	   -moz-box-shadow: @shadow;
 	    -ms-box-shadow: @shadow;
@@ -79,7 +79,7 @@
 	        box-shadow: @shadow;
 }
 
-.transition( @transition ) {
+.transition(@transition) {
 	-webkit-transition: @transition;
 	   -moz-transition: @transition;
 	    -ms-transition: @transition;
@@ -87,7 +87,7 @@
 	        transition: @transition;
 }
 
-.transform( @transform ) {
+.transform(@transform) {
 	-webkit-transform: @transform;
 	   -moz-transform: @transform;
 	    -ms-transform: @transform;
@@ -95,7 +95,7 @@
 	        transform: @transform;
 }
 
-.hyphens( @hyphens ) {
+.hyphens(@hyphens) {
 	-webkit-hyphens: @hyphens;
 	   -moz-hyphens: @hyphens;
 	    -ms-hyphens: @hyphens;
