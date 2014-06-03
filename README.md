@@ -21,8 +21,7 @@ app$ bower install
 # start grunt
 app$ grunt watch --force
 # start http-server
-app$ cd build
-app/build$ http-server
+app$ http-server build
 ```
 
 To use this frontend with your own configuration, edit `src/common/olwConfigurationService/olwConfigurationService.js`.
