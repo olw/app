@@ -59,6 +59,8 @@ angular.module('olwResource', [
 			}
 			
 			cdn.getSourcesForUuid(result.uuid).then(function(sources) {
+				var key, i, best = ['3.mp4', '2.mp4', '106.webm', '1.mp4', '105.webm', '4.mp4'], onlyFilenameSources, bestIndex;
+
 				$scope.sources = sources;
 				$scope.canvasShow = cdn.getNatureOfCharacteristicType($scope.type);
 				if (result.childs.length > 0) {
@@ -71,8 +73,40 @@ angular.module('olwResource', [
 						page: start
 					});
 				}
+
+				$scope.downloadUrls = {
+					raw: cdn.getUrlForUuid(result.uuid) + '/30.zip'
+				};
+				$scope.downloadUrls.raw += $scope.filename(result.name, $scope.downloadUrls.raw);
+
+				for (key in sources) {
+					if (sources.hasOwnProperty(key)) {
+						$scope.downloadUrls[key] = (sources[key]) ? sources[key][0] + $scope.filename(result.name, sources[key][0]) : $scope.downloadUrls.raw;
+						if (key === 'video') {
+							onlyFilenameSources = sources[key].map(function(s) {
+								return s.substring(s.lastIndexOf('/') + 1);
+							});
+							for (i = 0; i < best.length; i++) {
+								bestIndex = onlyFilenameSources.indexOf(best[i]);
+								if (bestIndex > -1) {
+									$scope.downloadUrls[key] = sources[key][bestIndex] + $scope.filename(result.name, sources[key][bestIndex]);
+									break;
+								}
+							}
+							if (!$scope.downloadUrls.video) {
+								$scope.downloadUrls.video = (sources.lecturer) ? sources.lecturer[0] + $scope.filename(result.name, sources.lecturer[0]) : $scope.downloadUrls.raw;
+							}
+						}
+					}
+				}
+				console.log($scope.downloadUrls, $scope.canvasShow);
 			});
-			$scope.downloadUrl = cdn.getDownloadUrlForUuid(result.uuid, $scope.type, $scope.title);
+
+			$scope.filename = function(name, url) {
+				return '?filename=' + $filter('camelcase')(name) + url.substr(url.lastIndexOf('.'));
+			};
+
+			//$scope.downloadUrl = cdn.getDownloadUrlForUuid(result.uuid, $scope.type, $scope.title);
 			$scope.licenseTranslationParams = {
 				title: $scope.title,
 				users: $scope.users.join(', ')
@@ -83,6 +117,7 @@ angular.module('olwResource', [
 			// to only contain the elements that are currently present
 			$scope.$watch('canvasShow', function(now, old) {
 				var src, elem;
+				$scope.downloadUrl = $scope.downloadUrls[now];
 				// remove possible timeupdate listeners
 				if ('video' in $scope.sources && 'lecturer' in $scope.sources) {
 					document.getElementById('video').removeEventListener('timeupdate', $scope.sync);

@@ -88,7 +88,7 @@ angular.module('olwCdnService', ['olwConfigurationService', 'olwCamelcaseFilter'
             var deferred = $q.defer()
               , url = cdn.getUrlForUuid(uuid);
 
-            $q.all(['1.mp4', '2.mp4', '3.mp4', '4.mp4', '7.mp3', '8.ogg', '9.mp4', '13.pdf', '30.zip', '90.mp4', '105.webm', '106.webm', '205.webm'].map(function(filename) {
+            $q.all(['1.mp4', '2.mp4', '3.mp4', '4.mp4', '7.mp3', '8.ogg', '9.mp4', '13.pdf', '30.zip', '90.mp4', '105.webm', '106.webm', '205.webm', '206.webm'].map(function(filename) {
                 var q = $q.defer()
                   , path = url + '/' + filename;
                 $http.head(path)
@@ -110,7 +110,7 @@ angular.module('olwCdnService', ['olwConfigurationService', 'olwCamelcaseFilter'
                                 return ['7.mp3', '8.ogg'].indexOf(file.name) > -1;
                             }).map(onlyPath),
                         video: files.filter(function(file) {
-                                return ['1.mp4', '2.mp4', '4.mp4', '105.webm', '106.webm'].indexOf(file.name) > -1;
+                                return ['1.mp4', '2.mp4', '3.mp4', '4.mp4', '105.webm', '106.webm'].indexOf(file.name) > -1;
                             }).map(onlyPath),
                         lecturer: files.filter(function(file) {
                                 return ['9.mp4', '90.mp4', '205.webm'].indexOf(file.name) > -1;
